@@ -11,7 +11,8 @@
         android:theme="@style/Theme.Recomovie">
         <activity
             android:name=".CreateReview"
-            android:exported="true" >
+            android:exported="true"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -25,9 +26,10 @@
             android:name=".MovieListRvActivity"
             android:exported="true">
         </activity>
-<!--        <activity-->
-<!--            android:name=".MainActivity"-->
-<!--            android:exported="true" />-->
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+/>
     </application>
 
 </manifest>

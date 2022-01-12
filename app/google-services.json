@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "523351002959",
+    "project_id": "recomovie-80a4a",
+    "storage_bucket": "recomovie-80a4a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:523351002959:android:01ecf6da2bd1a93c94ff3a",
+        "android_client_info": {
+          "package_name": "com.example.recomovie"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "523351002959-paajfi8k5a9nuvn4o6mh14m8dbrg9sdj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAtWi_fSqWmca5oMxBdKRmdnFaBu0rRzbQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "523351002959-paajfi8k5a9nuvn4o6mh14m8dbrg9sdj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
