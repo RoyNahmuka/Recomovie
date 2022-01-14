@@ -11,7 +11,7 @@ public class Model {
     ModelFirebase modelFirebase = new ModelFirebase();
     private Model() {
         for (Integer i = 0; i < 10; i++) {
-            addReview(new Review("Name: " + i.toString(), "description: " + i.toString(), "Year: " + i.toString(), "Country: " + i.toString(), "Category: " + i.toString(), "UserName: " + i.toString(), 5, 630, null));
+            addReview(new Review(i.toString(),"Name: " + i.toString(), "description: " + i.toString(), "Year: " + i.toString(), "Country: " + i.toString(), "Category: " + i.toString(), "UserName: " + i.toString(), 5, 630, null));
         }
     }
 

@@ -50,7 +50,7 @@ public class CreateReview extends AppCompatActivity {
     }
 
     public void onSubmit() {
-        Review review = new Review(movieName.getText().toString(),description.getText().toString(),year.getText().toString(),country.getText().toString(),category.getText().toString(),"username",5,5,null);
+        Review review = new Review("1",movieName.getText().toString(),description.getText().toString(),year.getText().toString(),country.getText().toString(),category.getText().toString(),"username",5,5,null);
         Model.instance.addReview(review);
         Intent intent = new Intent(getApplicationContext(), MovieListRvActivity.class);
         startActivity(intent);
