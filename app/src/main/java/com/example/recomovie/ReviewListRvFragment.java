@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.recomovie.model.Model;
@@ -22,6 +23,7 @@ import java.util.List;
 
 public class ReviewListRvFragment extends Fragment {
     List<Review> reviewList = new LinkedList<>();
+    Button addReviewBtn;
 
     interface OnItemClickListener {
         void onItemCLick(int position);
@@ -53,10 +55,20 @@ public class ReviewListRvFragment extends Fragment {
                 tran.commit();
             }
         });
+
+        addReviewBtn = view.findViewById(R.id.add_review_btn);
+        addReviewBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CreateReviewFragment createReviewFragment = new CreateReviewFragment();
+                FragmentTransaction tran = getParentFragmentManager().beginTransaction();
+                tran.add(R.id.base_frag_container, createReviewFragment);
+                tran.addToBackStack("");
+                tran.commit();
+            }
+        });
         return view;
     }
-
-
 
     class ReviewListViewHolder extends RecyclerView.ViewHolder{
         TextView movieName;
