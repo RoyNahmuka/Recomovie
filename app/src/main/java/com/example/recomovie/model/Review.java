@@ -9,7 +9,7 @@ import com.example.recomovie.R;
 import java.util.List;
 
 public class Review {
-
+    String id;
     String movieName;
     String description;
     String year;
@@ -26,7 +26,7 @@ public class Review {
         this.description = description;
         this.username = username;
     }
-    public Review(String movieName, String description, String year, String country, String category, String username, Integer Stars,Integer Likes, ImageView movieImage){
+    public Review(String id, String movieName, String description, String year, String country, String category, String username, Integer Stars,Integer Likes, ImageView movieImage){
         this.movieName = movieName;
         this.description = description;
         this.year = year;
@@ -46,6 +46,10 @@ public class Review {
 
     public void setActors(List<String> actors) {
         this.actors = actors;
+    }
+
+    public String getId() {
+        return id;
     }
 
     public String getYear() {
