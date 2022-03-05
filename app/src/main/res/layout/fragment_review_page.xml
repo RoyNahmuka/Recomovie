@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFF"
-    tools:context=".ReviewPageFragment">
+    tools:context=".ReviewListRvFragment$ReviewPageFragment">
     <TextView
         android:id="@+id/review_info_input_description"
         android:layout_width="210dp"
