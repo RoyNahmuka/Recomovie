@@ -27,6 +27,7 @@ public class Review {
         this.username = username;
     }
     public Review(String id, String movieName, String description, String year, String country, String category, String username, Integer Stars,Integer Likes, ImageView movieImage){
+        this.id=id;
         this.movieName = movieName;
         this.description = description;
         this.year = year;
