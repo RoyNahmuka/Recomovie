@@ -33,10 +33,6 @@ public class ReviewPageFragment extends Fragment {
 
         movieName.setText(clickedReview.getMovieName());
         description.setText(clickedReview.getDescription());
-        category.setText(clickedReview.getCategory());
-//        actors.setText(clickedReview.getActors());
-        year.setText(clickedReview.getYear());
-        country.setText(clickedReview.getCountry());
 //        rate.setText(clickedReview.getStars());
         return view;
     }

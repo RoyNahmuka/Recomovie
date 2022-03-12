@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.recomovie.model.Model;
+import com.example.recomovie.model.ModelFirebase;
 import com.example.recomovie.model.Review;
 
 import java.util.LinkedList;
@@ -56,7 +57,7 @@ public class CreateReviewFragment extends Fragment {
     }
 
     public void onSubmit() {
-        Review review = new Review("1",movieName.getText().toString(),description.getText().toString(),year.getText().toString(),country.getText().toString(),category.getText().toString(),"username",5,5,null);
+        Review review = new Review("1",movieName.getText().toString(),description.getText().toString(),"username",5,5,null);
         Model.instance.addReview(review);
         getParentFragmentManager().popBackStack();
     }

@@ -6,15 +6,14 @@ import android.widget.TextView;
 
 import com.example.recomovie.R;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Review {
     String id;
     String movieName;
     String description;
-    String year;
-    String country;
-    String category;
     String username;
     Integer Stars;
     Integer Likes;
@@ -26,13 +25,10 @@ public class Review {
         this.description = description;
         this.username = username;
     }
-    public Review(String id, String movieName, String description, String year, String country, String category, String username, Integer Stars,Integer Likes, ImageView movieImage){
+    public Review(String id, String movieName, String description, String username, Integer Stars,Integer Likes, ImageView movieImage){
         this.id=id;
         this.movieName = movieName;
         this.description = description;
-        this.year = year;
-        this.country = country;
-        this.category = category;
         this.username = username;
         this.Stars = Stars;
         this.Likes = Likes;
@@ -51,30 +47,6 @@ public class Review {
 
     public String getId() {
         return id;
-    }
-
-    public String getYear() {
-        return year;
-    }
-
-    public void setYear(String year) {
-        this.year = year;
-    }
-
-    public String getCountry() {
-        return country;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
-    }
-
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
     }
 
     public String getMovieName() {
@@ -124,4 +96,21 @@ public class Review {
     public void setMovieImage(ImageView movieImage) {
         this.movieImage = movieImage;
     }
+
+    public Map<String, Object> toJson() {
+
+        Map<String, Object> json = new HashMap<>();
+
+        json.put("id", id);
+        json.put("movieName", movieName);
+        json.put("description", description);
+        json.put("username", username);
+        json.put("Stars", Stars);
+        json.put("Likes", Likes);
+        json.put("movieImage", movieImage);
+
+        return json;
+
+    }
+
 }

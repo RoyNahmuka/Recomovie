@@ -11,7 +11,7 @@ public class Model {
     ModelFirebase modelFirebase = new ModelFirebase();
     private Model() {
         for (Integer i = 0; i < 10; i++) {
-            addReview(new Review(i.toString(),"Name: " + i.toString(), "description: " + i.toString(), "Year: " + i.toString(), "Country: " + i.toString(), "Category: " + i.toString(), "UserName: " + i.toString(), 5, 630, null));
+            addReview(new Review(i.toString(),"Name: " + i.toString(), "description: " + i.toString(), "UserName: " + i.toString(), 5, 630, null));
         }
     }
 
@@ -19,4 +19,8 @@ public class Model {
     public Review getReviewByIndex(int index) {return reviewList.get(index);}
     public Review removeReviewByIndex(int index) {return reviewList.remove(index);}
     public void addReview(Review review) { reviewList.add(review);}
+
+    public class AddReviewListener{
+        public void onComplete(){};
+    }
 }
