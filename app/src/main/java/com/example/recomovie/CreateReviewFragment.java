@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,9 +26,6 @@ public class CreateReviewFragment extends Fragment {
     TextView movieName;
     TextView description;
     TextView actors;
-    TextView year;
-    TextView country;
-    TextView category;
     ImageView movieImage;
     int stars;
     Button submit;
@@ -41,9 +39,6 @@ public class CreateReviewFragment extends Fragment {
         movieName = view.findViewById(R.id.create_review_movie_name_input);
         description = view.findViewById(R.id.create_review_description_input);
 //        actors = findViewById(R.id.create_review_actors_input);
-        year = view.findViewById(R.id.create_review_year_input);
-        country = view.findViewById(R.id.create_review_country_input);
-        category = view.findViewById(R.id.create_review_category_input);
 //        movieName = findViewById(R.id.create_review_image_input);
         submit = view.findViewById(R.id.create_review_submit_btn);
         submit.setOnClickListener(new View.OnClickListener() {
@@ -57,9 +52,8 @@ public class CreateReviewFragment extends Fragment {
     }
 
     public void onSubmit() {
-        Review review = new Review("1",movieName.getText().toString(),description.getText().toString(),"username",5,5,null);
-        Model.instance.addReview(review);
-        getParentFragmentManager().popBackStack();
+        Review review = new Review("1",movieName.getText().toString(),description.getText().toString(),"username",5,5);
+        Model.instance.addReview(review,()->Navigation.findNavController(submit).navigateUp());
     }
 
 }

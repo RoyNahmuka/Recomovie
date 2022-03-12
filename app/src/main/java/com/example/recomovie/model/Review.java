@@ -17,7 +17,6 @@ public class Review {
     String username;
     Integer Stars;
     Integer Likes;
-    ImageView movieImage;
 
     public Review(){};
     public Review(String movieName, String description, String username){
@@ -25,14 +24,13 @@ public class Review {
         this.description = description;
         this.username = username;
     }
-    public Review(String id, String movieName, String description, String username, Integer Stars,Integer Likes, ImageView movieImage){
+    public Review(String id, String movieName, String description, String username, Integer Stars,Integer Likes){
         this.id=id;
         this.movieName = movieName;
         this.description = description;
         this.username = username;
         this.Stars = Stars;
         this.Likes = Likes;
-        this.movieImage = movieImage;
     }
 
     List<String> actors;
@@ -89,14 +87,6 @@ public class Review {
         Likes = likes;
     }
 
-    public ImageView getMovieImage() {
-        return movieImage;
-    }
-
-    public void setMovieImage(ImageView movieImage) {
-        this.movieImage = movieImage;
-    }
-
     public Map<String, Object> toJson() {
 
         Map<String, Object> json = new HashMap<>();
@@ -107,10 +97,22 @@ public class Review {
         json.put("username", username);
         json.put("Stars", Stars);
         json.put("Likes", Likes);
-        json.put("movieImage", movieImage);
 
         return json;
 
     }
+    public static Review create(Map<String, Object> json) {
+        String id = (String) json.get("id");
+        String movieName = (String) json.get("movieName");
+        String description = (String) json.get("description");
+        String username=(String)  json.get("username");
+        Integer Stars= Integer.parseInt(String.valueOf(json.get("Stars")));
+        Integer Likes=Integer.parseInt(String.valueOf(json.get("Likes")));
+
+
+        Review review = new Review(id,movieName,description,username,Stars,Likes);
+        return review;
+    }
+
 
 }
