@@ -14,10 +14,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.recomovie.model.Model;
 import com.example.recomovie.model.Review;
+import com.squareup.picasso.Picasso;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -60,12 +62,14 @@ public class ReviewListRvFragment extends Fragment {
         TextView movieName;
         TextView username;
         TextView description;
+        ImageView movieImage;
 
         public ReviewListViewHolder(@NonNull View itemView, OnItemClickListener listener) {
             super(itemView);
             movieName = itemView.findViewById(R.id.list_row_movie_name);
             username = itemView.findViewById(R.id.list_row_username);
             description = itemView.findViewById(R.id.list_row_movie_description);
+            movieImage = itemView.findViewById(R.id.list_row_movie_image);
 
 
             //TODO: change this behave to navigation logic
@@ -73,9 +77,20 @@ public class ReviewListRvFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     int position = getAdapterPosition();
-                    listener.onItemCLick(v,position);
+                    listener.onItemCLick(v, position);
                 }
             });
+        }
+
+        public void bind(Review review){
+            description.setText(review.getDescription());
+            movieName.setText(review.getMovieName());
+            username.setText(review.getUsername());
+            if(review.getMovieImageUrl() != null) {
+                Picasso.get()
+                        .load(review.getMovieImageUrl())
+                        .into(movieImage);
+            }
         }
     }
 
@@ -99,9 +114,7 @@ public class ReviewListRvFragment extends Fragment {
         public void onBindViewHolder(@NonNull ReviewListViewHolder holder, int position) {
             //Review class binding
             Review review = reviewList.get(position);
-            holder.description.setText(review.getDescription());
-            holder.movieName.setText(review.getMovieName());
-            holder.username.setText(review.getUsername());
+            holder.bind(review);
         }
 
         @Override

@@ -4,12 +4,15 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
 import com.example.recomovie.model.Model;
 import com.example.recomovie.model.Review;
+import com.squareup.picasso.Picasso;
+
 public class ReviewPageFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
@@ -22,7 +25,10 @@ public class ReviewPageFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_review_page, container, false);
         String reviewID =ReviewPageFragmentArgs.fromBundle(getArguments()).getReviewId();
         System.out.println(reviewID);
-        Review clickedReview= Model.instance.getReviewByIndex(Integer.parseInt(reviewID));
+
+        Review clickedReview = Model.instance.getReviewByIndex(Integer.parseInt(reviewID));
+
+        ImageView movieImage = view.findViewById(R.id.review_info_movie_image);
         TextView movieName = view.findViewById(R.id.review_info_input_movie_name);
         TextView description = view.findViewById(R.id.review_info_input_description);
         TextView category = view.findViewById(R.id.review_info_input_category);
@@ -33,7 +39,12 @@ public class ReviewPageFragment extends Fragment {
 
         movieName.setText(clickedReview.getMovieName());
         description.setText(clickedReview.getDescription());
-//        rate.setText(clickedReview.getStars());
+
+        if (clickedReview.getMovieImageUrl() != null){
+            Picasso.get()
+                    .load(clickedReview.getMovieImageUrl())
+                    .into(movieImage);
+        }
         return view;
     }
 }

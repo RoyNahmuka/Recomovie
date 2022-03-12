@@ -1,5 +1,6 @@
 package com.example.recomovie.model;
 
+import android.graphics.Bitmap;
 import android.widget.ImageView;
 
 import java.util.LinkedList;
@@ -15,6 +16,7 @@ public class Model {
     }
 
     public List<Review> getAllReviews() {return reviewList; }
+    public int getNumOfReviews() { return  reviewList.size(); }
     public List<User> getUserList() { return userList; }
     public Review getReviewByIndex(int index) {return reviewList.get(index);}
     public User getUserById(int userId){return userList.get(userId);}
@@ -35,5 +37,12 @@ public class Model {
 
     public interface AddUserListener {
         void onComplete();
+    }
+
+    public interface SaveImageListener{
+        void onComplete(String url);
+    }
+    public void saveImage(Bitmap imageBitmap, String imageName, SaveImageListener listener) {
+        modelFirebase.saveImage(imageBitmap, imageName, listener);
     }
 }

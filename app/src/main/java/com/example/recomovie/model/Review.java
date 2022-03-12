@@ -14,6 +14,7 @@ public class Review {
     String id;
     String movieName;
     String description;
+    String movieImageUrl;
     String username;
     Integer Stars;
     Integer Likes;
@@ -31,6 +32,16 @@ public class Review {
         this.username = username;
         this.Stars = Stars;
         this.Likes = Likes;
+    }
+
+    public Review(String id, String movieName, String description, String username, Integer Stars,Integer Likes, String movieImageUrl){
+        this.id=id;
+        this.movieName = movieName;
+        this.description = description;
+        this.username = username;
+        this.Stars = Stars;
+        this.Likes = Likes;
+        this.movieImageUrl = movieImageUrl;
     }
 
     List<String> actors;
@@ -87,6 +98,12 @@ public class Review {
         Likes = likes;
     }
 
+    public void setMovieImage(String url) {
+        this.movieImageUrl = url;
+    }
+
+    public String getMovieImageUrl() {return this.movieImageUrl;}
+
     public Map<String, Object> toJson() {
 
         Map<String, Object> json = new HashMap<>();
@@ -97,6 +114,7 @@ public class Review {
         json.put("username", username);
         json.put("Stars", Stars);
         json.put("Likes", Likes);
+        json.put("movieImageUrl", movieImageUrl);
 
         return json;
 
@@ -105,12 +123,13 @@ public class Review {
         String id = (String) json.get("id");
         String movieName = (String) json.get("movieName");
         String description = (String) json.get("description");
-        String username=(String)  json.get("username");
+        String username=(String) json.get("username");
+        String movieImageUrl=(String) json.get("movieImageUrl");
         Integer Stars= Integer.parseInt(String.valueOf(json.get("Stars")));
         Integer Likes=Integer.parseInt(String.valueOf(json.get("Likes")));
 
 
-        Review review = new Review(id,movieName,description,username,Stars,Likes);
+        Review review = new Review(id,movieName,description,username,Stars,Likes,movieImageUrl);
         return review;
     }
 

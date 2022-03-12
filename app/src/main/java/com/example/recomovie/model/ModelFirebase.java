@@ -1,15 +1,23 @@
 package com.example.recomovie.model;
 
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
+import java.io.ByteArrayOutputStream;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -51,5 +59,29 @@ public class ModelFirebase {
                 .add(json)
                 .addOnSuccessListener(unused -> listener.onComplete())
                 .addOnFailureListener(e -> listener.onComplete());
+    }
+
+    FirebaseStorage storage = FirebaseStorage.getInstance();
+
+    public void saveImage(Bitmap imageBitmap, String imageName, Model.SaveImageListener listener) {
+        StorageReference storageRef = storage.getReference();
+        StorageReference imageRef = storageRef.child("/movie_images/" + imageName);
+
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        imageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] data = baos.toByteArray();
+
+        UploadTask uploadTask = imageRef.putBytes(data);
+        uploadTask.addOnFailureListener(exception -> {
+            listener.onComplete(null);
+        }).addOnSuccessListener(taskSnapshot -> {
+            imageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                @Override
+                public void onSuccess(Uri uri) {
+                    Uri downloadUrl = uri;
+                    listener.onComplete(downloadUrl.toString());
+                }
+            });
+        });
     }
 }
