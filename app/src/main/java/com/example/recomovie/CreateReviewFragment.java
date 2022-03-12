@@ -24,10 +24,6 @@ public class CreateReviewFragment extends Fragment {
     List<Review> reviewList = new LinkedList<>();
     TextView movieName;
     TextView description;
-    TextView actors;
-    TextView year;
-    TextView country;
-    TextView category;
     ImageView movieImage;
     int stars;
     Button submit;
@@ -38,13 +34,8 @@ public class CreateReviewFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_create_review, container, false);
         reviewList = Model.instance.getAllReviews();
-        movieName = view.findViewById(R.id.create_review_movie_name_input);
         description = view.findViewById(R.id.create_review_description_input);
-//        actors = findViewById(R.id.create_review_actors_input);
-        year = view.findViewById(R.id.create_review_year_input);
-        country = view.findViewById(R.id.create_review_country_input);
-        category = view.findViewById(R.id.create_review_category_input);
-//        movieName = findViewById(R.id.create_review_image_input);
+        movieName = view.findViewById(R.id.create_review_movie_name_input);
         submit = view.findViewById(R.id.create_review_submit_btn);
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
