@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -55,6 +56,29 @@ public class ModelFirebase {
                 });
         return reviewList;
     }
+
+    public interface GetAllReviewListener{
+        void onComplete(List<Review> list);
+    }
+
+    public void getReviewList(GetAllReviewListener listener) {
+        db.collection("reviews")
+                //.whereGreaterThanOrEqualTo("updateDate",new Timestamp(lastUpdateDate,0))
+                .get()
+                .addOnCompleteListener(task -> {
+                    List<Review> list = new LinkedList<Review>();
+                    if (task.isSuccessful()){
+                        for (QueryDocumentSnapshot doc : task.getResult()){
+                            Review review = Review.create(doc.getData());
+                            if (review != null){
+                                list.add(review);
+                            }
+                        }
+                    }
+                    listener.onComplete(list);
+                });
+    }
+
     public void addUser(User user,Model.AddUserListener listener){
         Map<String, Object> json = user.toJson();
         db.collection("users")

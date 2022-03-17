@@ -38,7 +38,6 @@ public class CreateReviewFragment extends Fragment {
     static final int REQUEST_IMAGE_PICK = 2;
     final static int RESAULT_SUCCESS = 0;
 
-    List<Review> reviewList = new LinkedList<>();
     TextView movieName;
     TextView description;
     TextView actors;
@@ -54,13 +53,12 @@ public class CreateReviewFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_create_review, container, false);
-        reviewList = Model.instance.getAllReviews();
         movieName = view.findViewById(R.id.create_review_movie_name_input);
         description = view.findViewById(R.id.create_review_description_input);
         camera = view.findViewById(R.id.create_review_camera);
         gallery = view.findViewById(R.id.create_review_gallery);
         submit = view.findViewById(R.id.create_review_submit_btn);
-        movieImage = view.findViewById(R.id.create_review_image_input);
+        //movieImage = view.findViewById(R.id.create_review_image_input);
 
         camera.setOnClickListener(v -> {
             openCamera();

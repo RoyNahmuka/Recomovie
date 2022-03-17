@@ -1,13 +1,16 @@
 package com.example.recomovie;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -25,29 +28,41 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class ReviewListRvFragment extends Fragment {
-    List<Review> reviewList = new LinkedList<>();
+    ReviewListRvViewModel viewModel;
     Button addReviewBtn;
     Button loginBtn;
     Button profileBtn;
+    ReviewListViewAdapter adapter;
+    SwipeRefreshLayout swipeRefresh;
 
     interface OnItemClickListener {
         void onItemCLick(View v,int position);
     }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        viewModel = new ViewModelProvider(this).get(ReviewListRvViewModel.class);
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_review_list_rv, container, false);
-        reviewList = Model.instance.getAllReviews();
+
 
         RecyclerView list = view.findViewById(R.id.movielist_rv);
         list.setHasFixedSize(true);
         list.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        ReviewListViewAdapter adapter = new ReviewListViewAdapter();
+        swipeRefresh = view.findViewById(R.id.reviewlist_swiperefresh);
+        swipeRefresh.setOnRefreshListener(() -> Model.instance.refreshReviewsList());
+
+        adapter = new ReviewListViewAdapter();
         list.setAdapter(adapter);
 
         adapter.setOnItemClickListener((v, position) -> {
-            String reviewId=reviewList.get(position).getId();
+            String reviewId=viewModel.getReviewList().getValue().get(position).getId();
             Navigation.findNavController(v).navigate(ReviewListRvFragmentDirections.actionReviewListRvFragmentToReviewPageFragment(reviewId));
         });
 
@@ -58,9 +73,26 @@ public class ReviewListRvFragment extends Fragment {
         profileBtn = view.findViewById(R.id.profile_btn);
         profileBtn.setOnClickListener((v)-> Navigation.findNavController(v).navigate(R.id.action_reviewListRvFragment_to_profile_Page_Fragment));
 
+
+        setHasOptionsMenu(true);
+        viewModel.getReviewList().observe(getViewLifecycleOwner(), list1 -> refresh());
+        swipeRefresh.setRefreshing(Model.instance.getReviewListLoadingState().getValue() == Model.ReviewListLoadingState.loading);
+        Model.instance.getReviewListLoadingState().observe(getViewLifecycleOwner(), studentListLoadingState -> {
+            if (studentListLoadingState == Model.ReviewListLoadingState.loading){
+                swipeRefresh.setRefreshing(true);
+            }else{
+                swipeRefresh.setRefreshing(false);
+            }
+
+        });
+
         return view;
     }
 
+    private void refresh() {
+        adapter.notifyDataSetChanged();
+        swipeRefresh.setRefreshing(false);
+    }
 
     class ReviewListViewHolder extends RecyclerView.ViewHolder{
         TextView movieName;
@@ -117,13 +149,16 @@ public class ReviewListRvFragment extends Fragment {
         @Override
         public void onBindViewHolder(@NonNull ReviewListViewHolder holder, int position) {
             //Review class binding
-            Review review = reviewList.get(position);
+            Review review = viewModel.getReviewList().getValue().get((position));
             holder.bind(review);
         }
 
         @Override
         public int getItemCount() {
-            return reviewList.size();
+            if(viewModel.getReviewList().getValue() == null){
+                return 0;
+            }
+            return viewModel.getReviewList().getValue().size();
         }
     }
 
