@@ -30,10 +30,20 @@ public class Model {
     public interface AddReviewListener{
         void onComplete();
     }
+
+    public interface GetReviewsListener{
+        void onComplete(List<Review> myReviews);
+    }
+
     public void addReview(Review review,AddReviewListener listener) {
         modelFirebase.addReview(review,listener);
         reviewList.add(review);
     }
+
+    public void SpecificUserReviews(String username) {
+        modelFirebase.SpecificUserReviews(username);
+    }
+
 
     public interface AddUserListener {
         void onComplete();

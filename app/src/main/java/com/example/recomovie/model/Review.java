@@ -127,8 +127,7 @@ public class Review {
         String movieImageUrl=(String) json.get("movieImageUrl");
         Integer Stars= Integer.parseInt(String.valueOf(json.get("Stars")));
         Integer Likes=Integer.parseInt(String.valueOf(json.get("Likes")));
-
-
+        
         Review review = new Review(id,movieName,description,username,Stars,Likes,movieImageUrl);
         return review;
     }

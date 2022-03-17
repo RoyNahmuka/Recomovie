@@ -28,6 +28,7 @@ public class ReviewListRvFragment extends Fragment {
     List<Review> reviewList = new LinkedList<>();
     Button addReviewBtn;
     Button loginBtn;
+    Button profileBtn;
 
     interface OnItemClickListener {
         void onItemCLick(View v,int position);
@@ -54,6 +55,9 @@ public class ReviewListRvFragment extends Fragment {
         addReviewBtn.setOnClickListener((v)->Navigation.findNavController(v).navigate(R.id.action_reviewListRvFragment_to_createReviewFragment));
         loginBtn = view.findViewById(R.id.login_button);
         loginBtn.setOnClickListener((v)-> Navigation.findNavController(v).navigate(R.id.action_reviewListRvFragment_to_loginFragment));
+        profileBtn = view.findViewById(R.id.profile_btn);
+        profileBtn.setOnClickListener((v)-> Navigation.findNavController(v).navigate(R.id.action_reviewListRvFragment_to_profile_Page_Fragment));
+
         return view;
     }
 

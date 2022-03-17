@@ -18,6 +18,9 @@
         <action
             android:id="@+id/action_reviewListRvFragment_to_reviewPageFragment"
             app:destination="@id/reviewPageFragment" />
+        <action
+            android:id="@+id/action_reviewListRvFragment_to_profile_Page_Fragment"
+            app:destination="@id/profile_Page_Fragment" />
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
@@ -57,4 +60,9 @@
             android:name="review_id"
             app:argType="string" />
     </fragment>
+    <fragment
+        android:id="@+id/profile_Page_Fragment"
+        android:name="com.example.recomovie.Profile_Page_Fragment"
+        android:label="fragment_profile__page_"
+        tools:layout="@layout/fragment_profile__page_" />
 </navigation>

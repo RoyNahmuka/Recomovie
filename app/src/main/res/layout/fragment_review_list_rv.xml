@@ -29,6 +29,17 @@
         app:layout_constraintHorizontal_bias="0.447"
         app:layout_constraintStart_toStartOf="parent" />
 
+    <Button
+        android:id="@+id/profile_btn"
+        android:layout_width="121dp"
+        android:layout_height="48dp"
+        android:text="profile"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.796"
+        app:layout_constraintStart_toEndOf="@+id/add_review_btn"
+        app:layout_constraintTop_toBottomOf="@+id/login_button" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/movielist_rv"
         android:layout_width="408dp"

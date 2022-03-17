@@ -3,12 +3,21 @@ package com.example.recomovie;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.example.recomovie.model.Model;
+import com.example.recomovie.model.Review;
+
+import java.util.LinkedList;
+import java.util.List;
 
 
 public class Profile_Page_Fragment extends Fragment {
@@ -17,6 +26,8 @@ public class Profile_Page_Fragment extends Fragment {
     TextView addressTV;
     TextView phoneTV;
     private String username;
+    List<Review> reviewList = new LinkedList<>();
+
 
 
     @Override
@@ -27,6 +38,14 @@ public class Profile_Page_Fragment extends Fragment {
         usernameTV = view.findViewById(R.id.profile_user_name);
         if(username!=null)
             usernameTV.setText(username);
+
+        Model.instance.SpecificUserReviews("shoval");
+        System.out.println("PPF:" +reviewList);
+        RecyclerView list = view.findViewById(R.id.myReviewsList);
+        list.setHasFixedSize(true);
+        list.setLayoutManager(new LinearLayoutManager(getContext()));
+
+
         return view;
     }
 
@@ -44,4 +63,7 @@ public class Profile_Page_Fragment extends Fragment {
     public void setPhoneTV(TextView phoneTV) {
         this.phoneTV = phoneTV;
     }
+
+
+
 }
