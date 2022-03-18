@@ -8,6 +8,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.example.recomovie.model.users.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -79,13 +80,13 @@ public class ModelFirebase {
                 });
     }
 
-    public void addUser(User user,Model.AddUserListener listener){
-        Map<String, Object> json = user.toJson();
-        db.collection("users")
-                .add(json)
-                .addOnSuccessListener(unused -> listener.onComplete())
-                .addOnFailureListener(e -> listener.onComplete());
-    }
+//    public void addUser(User user, Model.AddUserListener listener){
+//        Map<String, Object> json = user.toJson();
+//        db.collection("users")
+//                .add(json)
+//                .addOnSuccessListener(unused -> listener.onComplete())
+//                .addOnFailureListener(e -> listener.onComplete());
+//    }
 
 
     public void SpecificUserReviews(String username){

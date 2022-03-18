@@ -4,20 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Profile_Page_Fragment">
-
-    <TextView
-        android:id="@+id/profile_user_name"
-        android:layout_width="186dp"
-        android:layout_height="49dp"
-        android:textSize="34sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.076" />
+    tools:context=".ui.authentication.ProfilePageFragment">
 
     <ImageView
         android:id="@+id/profile_user_image"
@@ -26,7 +13,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profile_user_name"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.083"
         tools:src="@tools:sample/avatars" />
 
@@ -34,15 +21,16 @@
         android:id="@+id/textView2"
         android:layout_width="126dp"
         android:layout_height="20dp"
-        android:layout_marginBottom="20dp"
         android:text="Personal Details:"
         android:textAlignment="viewStart"
         android:textSize="16sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/TextView3"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.235"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.175"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.365" />
 
     <TextView
         android:id="@+id/TextView3"
@@ -51,42 +39,51 @@
         android:layout_marginBottom="12dp"
         android:text="User Name:"
         android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@+id/textView4"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.208"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.155"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.491" />
 
     <TextView
         android:id="@+id/profile_details_username"
-        android:layout_width="121dp"
-        android:layout_height="21dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginBottom="12dp"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@+id/profile_details_address"
-        app:layout_constraintStart_toEndOf="@+id/TextView3" />
-
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="73dp"
+        android:layout_width="122dp"
         android:layout_height="20dp"
         android:layout_marginBottom="12dp"
-        android:text="Address:"
         android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@+id/textView5"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.198"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.605"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.489" />
 
     <TextView
-        android:id="@+id/profile_details_address"
-        android:layout_width="122dp"
-        android:layout_height="19dp"
-        android:layout_marginStart="36dp"
-        android:layout_marginBottom="16dp"
+        android:id="@+id/profile_details_name"
+        android:layout_width="100dp"
+        android:layout_height="20dp"
+        android:layout_marginBottom="32dp"
+        android:text="Full Name:"
         android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@+id/profile_details_phone"
-        app:layout_constraintStart_toEndOf="@+id/textView4" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.16"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.443" />
+
+    <TextView
+        android:id="@+id/profile_details_full_name"
+        android:layout_width="122dp"
+        android:layout_height="20dp"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.608"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.424" />
 
     <TextView
         android:id="@+id/textView5"
@@ -96,22 +93,22 @@
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.185"
+        app:layout_constraintHorizontal_bias="0.138"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.61" />
+        app:layout_constraintVertical_bias="0.541" />
 
     <TextView
         android:id="@+id/profile_details_phone"
         android:layout_width="121dp"
-        android:layout_height="18dp"
+        android:layout_height="20dp"
         android:layout_marginStart="60dp"
-        android:layout_marginBottom="280dp"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/textView5" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.542" />
 
     <TextView
         android:id="@+id/textView14"

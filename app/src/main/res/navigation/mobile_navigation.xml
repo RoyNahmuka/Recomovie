@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_home">
+
+    <action
+        android:id="@+id/action_reviewListRvFragment_to_reviewPageFragment"
+        app:destination="@id/reviewPageFragment" />
+    <fragment
+        android:id="@+id/createReviewFragment"
+        android:name="com.example.recomovie.CreateReviewFragment"
+        android:label="Create Review"
+        tools:layout="@layout/fragment_create_review">
+        <action
+            android:id="@+id/action_createReviewFragment_to_reviewListRvFragment"
+            app:destination="@id/nav_reviews" />
+    </fragment>
+    <action
+        android:id="@+id/action_reviewListRvFragment_to_loginFragment"
+        app:destination="@id/nav_login" />
+    <fragment
+        android:id="@+id/nav_reviews"
+        android:name="com.example.recomovie.ui.reviews.ReviewListRvFragment"
+        android:label="Reviews"
+        tools:layout="@layout/fragment_review_list_rv">
+        <action
+            android:id="@+id/action_reviewListRvFragment_to_loginFragment"
+            app:destination="@id/nav_login" />
+        <action
+            android:id="@+id/action_reviewListRvFragment_to_createReviewFragment"
+            app:destination="@id/createReviewFragment" />
+        <action
+            android:id="@+id/action_reviewListRvFragment_to_reviewPageFragment"
+            app:destination="@id/reviewPageFragment" />
+        <action
+            android:id="@+id/nav_user_profile"
+            app:destination="@id/nav_user_profile" />
+    </fragment>
+    <action
+        android:id="@+id/action_loginFragment_to_registerFragment"
+        app:destination="@id/nav_register" />
+    <fragment
+        android:id="@+id/nav_login"
+        android:name="com.example.recomovie.ui.authentication.LoginFragment"
+        android:label="Login"
+        tools:layout="@layout/fragment_login">
+        <action
+            android:id="@+id/action_loginFragment_to_registerFragment"
+            app:destination="@id/nav_register" />
+        <action
+            android:id="@+id/action_loginFragment_to_reviewListRvFragment"
+            app:destination="@id/nav_reviews" />
+    </fragment>
+    <fragment
+        android:id="@+id/nav_user_profile"
+        android:name="com.example.recomovie.ui.authentication.ProfilePageFragment"
+        android:label="Review Page"
+        tools:layout="@layout/fragment_profile_page" />
+    <action
+        android:id="@+id/nav_user_profile"
+        app:destination="@id/nav_user_profile" />
+    <action
+        android:id="@+id/action_createReviewFragment_to_reviewListRvFragment"
+        app:destination="@id/nav_reviews" />
+    <fragment
+        android:id="@+id/reviewPageFragment"
+        android:name="com.example.recomovie.ui.reviews.ReviewPageFragment"
+        android:label="ReviewPageFragment">
+        <argument
+            android:name="review_id"
+            app:argType="string" />
+    </fragment>
+    <action
+        android:id="@+id/action_reviewListRvFragment_to_createReviewFragment"
+        app:destination="@id/createReviewFragment" />
+    <fragment
+        android:id="@+id/nav_register"
+        android:name="com.example.recomovie.ui.authentication.RegisterFragment"
+        android:label="Register"
+        tools:layout="@layout/fragment_register">
+        <action
+            android:id="@+id/action_registerFragment_to_loginFragment"
+            app:destination="@id/nav_login" />
+    </fragment>
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="com.example.recomovie.ui.home.HomeFragment"
+        android:label="@string/menu_home"
+        tools:layout="@layout/fragment_home" />
+
+</navigation>

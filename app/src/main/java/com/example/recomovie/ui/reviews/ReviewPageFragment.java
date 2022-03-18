@@ -1,4 +1,4 @@
-package com.example.recomovie;
+package com.example.recomovie.ui.reviews;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
+import com.example.recomovie.R;
 import com.example.recomovie.model.Model;
 import com.example.recomovie.model.Review;
 import com.squareup.picasso.Picasso;

@@ -1,4 +1,4 @@
-package com.example.recomovie;
+package com.example.recomovie.ui.reviews;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;

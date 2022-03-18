@@ -1,18 +1,16 @@
-package com.example.recomovie;
+package com.example.recomovie.ui.reviews;
 
 import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,18 +18,13 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.recomovie.R;
 import com.example.recomovie.model.Model;
 import com.example.recomovie.model.Review;
 import com.squareup.picasso.Picasso;
 
-import java.util.LinkedList;
-import java.util.List;
-
 public class ReviewListRvFragment extends Fragment {
     ReviewListRvViewModel viewModel;
-    Button addReviewBtn;
-    Button loginBtn;
-    Button profileBtn;
     ReviewListViewAdapter adapter;
     SwipeRefreshLayout swipeRefresh;
 
@@ -65,13 +58,6 @@ public class ReviewListRvFragment extends Fragment {
             String reviewId=viewModel.getReviewList().getValue().get(position).getId();
             Navigation.findNavController(v).navigate(ReviewListRvFragmentDirections.actionReviewListRvFragmentToReviewPageFragment(reviewId));
         });
-
-        addReviewBtn = view.findViewById(R.id.add_review_btn);
-        addReviewBtn.setOnClickListener((v)->Navigation.findNavController(v).navigate(R.id.action_reviewListRvFragment_to_createReviewFragment));
-        loginBtn = view.findViewById(R.id.login_button);
-        loginBtn.setOnClickListener((v)-> Navigation.findNavController(v).navigate(R.id.action_reviewListRvFragment_to_loginFragment));
-        profileBtn = view.findViewById(R.id.profile_btn);
-        profileBtn.setOnClickListener((v)-> Navigation.findNavController(v).navigate(R.id.action_reviewListRvFragment_to_profile_Page_Fragment));
 
 
         setHasOptionsMenu(true);
