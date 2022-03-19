@@ -90,12 +90,13 @@ public class ModelFirebase {
                 .addOnCompleteListener(task -> {
                     List<Review> list = new LinkedList<Review>();
                     if (task.isSuccessful()){
-                        for (QueryDocumentSnapshot doc : task.getResult()){
-                            Review review = Review.create(doc.getData());
-                            if (review != null){
-                                list.add(review);
+                        for (QueryDocumentSnapshot doc : task.getResult()) {
+                            Map<String, Object > data = doc.getData();
+                                Review review = Review.create(data);
+                                if (review != null) {
+                                    list.add(review);
+                                }
                             }
-                        }
                     }
                     listener.onComplete(list);
                 });

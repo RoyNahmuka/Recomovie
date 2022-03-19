@@ -27,4 +27,5 @@ public class ProfilePageRvViewModel extends ViewModel {
     public void setReviewList(LiveData<List<Review>> reviewList) {
         this.reviewList = reviewList;
     }
+
 }

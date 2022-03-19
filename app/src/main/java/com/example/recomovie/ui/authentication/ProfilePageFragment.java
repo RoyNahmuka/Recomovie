@@ -111,7 +111,15 @@ public class ProfilePageFragment extends Fragment {
             delete = itemView.findViewById(R.id.my_review_delete);
             edit = itemView.findViewById(R.id.my_review_edit);
 
-            delete.setOnClickListener(deleteView -> {Model.instance.removeReview(reviewId, ()->{});});
+            delete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition();
+                    Model.instance.removeReview(reviewId, ()->{});
+                    Model.instance.refreshReviewsList();
+                    viewModel.getReviewList().getValue().remove(position);
+                }
+            });
             edit.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

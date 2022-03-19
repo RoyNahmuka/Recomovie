@@ -36,6 +36,7 @@ import java.io.InputStream;
 import java.time.MonthDay;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 
 public class CreateReviewFragment extends Fragment {
     static final int REQUEST_IMAGE_CAPTURE = 1;
@@ -64,7 +65,7 @@ public class CreateReviewFragment extends Fragment {
         camera = view.findViewById(R.id.create_review_camera);
         gallery = view.findViewById(R.id.create_review_gallery);
         submit = view.findViewById(R.id.create_review_submit_btn);
-        //movieImage = view.findViewById(R.id.create_review_image_input);
+        movieImage = view.findViewById(R.id.create_review_image_input);
 
         camera.setOnClickListener(v -> {
             openCamera();
@@ -124,11 +125,11 @@ public class CreateReviewFragment extends Fragment {
     }
 
     public void onSubmit() {
-        String id = String.valueOf(Model.instance.getNumOfReviews());
         User user = usersModel.getCurrentUser();
-        Review review = new Review(id, movieName.getText().toString(), description.getText().toString(), user.getName(),user.getId(), 5, 5);
+        Random rand = new Random();
+        Review review = new Review("", movieName.getText().toString(), description.getText().toString(), user.getName(),user.getId(), 5, 5);
         if (imageBitmap != null) {
-            Model.instance.saveImage(imageBitmap, id + ".jpg", url -> {
+            Model.instance.saveImage(imageBitmap,  user.getId() + rand.nextInt(32) + ".jpg", url -> {
                 review.setMovieImage(url);
             });
         }

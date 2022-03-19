@@ -35,7 +35,6 @@ public class Model {
         loading,
         loaded
     }
-//    List<User> userList=new LinkedList<>();
     ModelFirebase modelFirebase = new ModelFirebase();
     private Model() {
         reviewListLoadingState.setValue(ReviewListLoadingState.loaded);
@@ -85,13 +84,8 @@ public class Model {
        }
        return null;
     }
-//    public User getUserById(int userId){return userList.get(userId);}
-    public Review removeReviewByIndex(int index) {return reviewList.getValue().remove(index);}
 
-//    public void addUser(User user,AddUserListener listener) {
-//        modelFirebase.addUser(user,listener);
-//        userList.add(user);
-//    }
+    public Review removeReviewByIndex(int index) {return reviewList.getValue().remove(index);}
 
     public interface AddReviewListener{
         void onComplete();
