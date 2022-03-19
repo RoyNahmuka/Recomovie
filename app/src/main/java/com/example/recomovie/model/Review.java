@@ -122,8 +122,8 @@ public class Review {
         json.put("description", description);
         json.put("username", username);
         json.put("creatorId", creatorId);
-        json.put("Stars", Stars);
-        json.put("Likes", Likes);
+        json.put("stars", Stars);
+        json.put("likes", Likes);
         json.put("movieImageUrl", movieImageUrl);
 
         return json;
@@ -136,8 +136,8 @@ public class Review {
         String username=(String) json.get("username");
         String creatorId =(String) json.get("creatorId");
         String movieImageUrl=(String) json.get("movieImageUrl");
-        Integer Stars= Integer.parseInt(String.valueOf(json.get("Stars")));
-        Integer Likes=Integer.parseInt(String.valueOf(json.get("Likes")));
+        Integer Stars= Integer.parseInt(String.valueOf(json.get("stars")));
+        Integer Likes=Integer.parseInt(String.valueOf(json.get("likes")));
         
         Review review = new Review(id,movieName,description,username,creatorId, Stars,Likes,movieImageUrl);
         return review;

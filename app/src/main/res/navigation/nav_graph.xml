@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/nav_reviews">
+
+    app:startDestination="@id/mapFragment">
     <fragment
         android:id="@+id/nav_reviews"
         android:name="com.example.recomovie.ui.reviews.ReviewListRvFragment"
@@ -65,4 +66,9 @@
         android:name="com.example.recomovie.ui.authentication.ProfilePageFragment"
         android:label="fragment_profile__page_"
         tools:layout="@layout/fragment_profile_page" />
+    <fragment
+        android:id="@+id/mapFragment"
+        android:name="com.example.recomovie.MapFragment"
+        android:label="fragment_map"
+        tools:layout="@layout/fragment_map" />
 </navigation>
