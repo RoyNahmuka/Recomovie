@@ -1,5 +1,9 @@
 package com.example.recomovie.model;
 
+import android.location.Geocoder;
+
+import com.google.firebase.firestore.GeoPoint;
+
 import java.util.List;
 
 public class Movie {
@@ -7,16 +11,14 @@ public class Movie {
     String summary;
     String year;
     List<String> actors;
-    List<Review> reviews;
-    Number rate;
+    GeoPoint geoPoint;
 
-    public Movie(String name, String summary, String year, List<String> actors, List<Review> reviews, Number rate) {
+    public Movie(String name, String summary, String year, List<String> actors, GeoPoint geoPoint) {
         this.name = name;
         this.summary = summary;
         this.year = year;
         this.actors = actors;
-        this.reviews = reviews;
-        this.rate = rate;
+        this.geoPoint = geoPoint;
     }
 
     public String getName() {
@@ -51,20 +53,11 @@ public class Movie {
         this.actors = actors;
     }
 
-    public List<Review> getReviews() {
-        return reviews;
+    public GeoPoint getGeoPoint() {
+        return geoPoint;
     }
 
-    public void setReviews(List<Review> reviews) {
-        this.reviews = reviews;
+    public void setGeoPoint(GeoPoint geoPoint) {
+        this.geoPoint = geoPoint;
     }
-
-    public Number getRate() {
-        return rate;
-    }
-
-    public void setRate(Number rate) {
-        this.rate = rate;
-    }
-
 }
