@@ -8,15 +8,21 @@ import android.widget.ImageView;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.recomovie.MyApplication;
+import com.example.recomovie.R;
+import com.example.recomovie.RecomovieApplication;
+import com.example.recomovie.model.users.User;
+import com.example.recomovie.model.users.UsersModel;
 
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
 public class Model {
     public static final Model instance = new Model(); //Singleton of the model
+    private UsersModel usersModel = UsersModel.instance;
     Executor executor = Executors.newFixedThreadPool(1);
 
     MutableLiveData<List<Review>> reviewList = new MutableLiveData<List<Review>>();
@@ -39,6 +45,22 @@ public class Model {
         if (reviewList.getValue() == null) { refreshReviewsList(); };
         return reviewList;
     }
+
+    public LiveData<List<Review>> getAllUserReviews(){
+        User user = usersModel.getCurrentUser();
+        List<Review> userReviews = new LinkedList<>();
+        Log.d(String.valueOf(this.reviewList.getValue().size()), "size");
+        for(Review review: this.reviewList.getValue()){
+            Log.d(review.getCreatorId() + " userId "+ user.getId(),"size");
+            if(review.getCreatorId().compareTo(user.getId()) == 0){
+                userReviews.add(review);
+            }
+        }
+        MutableLiveData<List<Review>> userReviewList = new MutableLiveData<List<Review>>();
+        userReviewList.setValue(userReviews);
+        return userReviewList;
+    }
+
     public void refreshReviewsList(){
         reviewListLoadingState.setValue(ReviewListLoadingState.loading);
         modelFirebase.getReviewList(new ModelFirebase.GetAllReviewListener() {
@@ -55,10 +77,16 @@ public class Model {
 
 
     public int getNumOfReviews() { return  reviewList.getValue().size(); }
-//    public List<User> getUserList() { return userList; }
     public Review getReviewByIndex(int index) {return reviewList.getValue().get(index);}
+    public Review getReviewById(String id) {
+       for(Review review: this.reviewList.getValue()){
+           if(review.getId().compareTo(id) == 0)
+               return review;
+       }
+       return null;
+    }
 //    public User getUserById(int userId){return userList.get(userId);}
-//    public Review removeReviewByIndex(int index) {return reviewList.getValue().remove(index);}
+    public Review removeReviewByIndex(int index) {return reviewList.getValue().remove(index);}
 
 //    public void addUser(User user,AddUserListener listener) {
 //        modelFirebase.addUser(user,listener);
@@ -71,6 +99,10 @@ public class Model {
 
     public interface GetReviewsListener{
         void onComplete(List<Review> myReviews);
+    }
+
+    public void removeReview(String reviewId, AddReviewListener listener){
+        modelFirebase.removeReview(reviewId,listener);
     }
 
     public void addReview(Review review,AddReviewListener listener) {

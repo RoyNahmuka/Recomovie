@@ -14,7 +14,7 @@
             app:destination="@id/nav_login" />
         <action
             android:id="@+id/action_reviewListRvFragment_to_createReviewFragment"
-            app:destination="@id/createReviewFragment" />
+            app:destination="@id/nav_create_review" />
         <action
             android:id="@+id/action_reviewListRvFragment_to_reviewPageFragment"
             app:destination="@id/reviewPageFragment" />
@@ -35,8 +35,8 @@
             app:destination="@id/nav_reviews" />
     </fragment>
     <fragment
-        android:id="@+id/createReviewFragment"
-        android:name="com.example.recomovie.CreateReviewFragment"
+        android:id="@+id/nav_create_review"
+        android:name="com.example.recomovie.ui.reviews.CreateReviewFragment"
         android:label="fragment_create_review"
         tools:layout="@layout/fragment_create_review" >
         <action

@@ -16,8 +16,10 @@ public class Review {
     String description;
     String movieImageUrl;
     String username;
+    String creatorId;
     Integer Stars;
     Integer Likes;
+    List<String> actors;
 
     public Review(){};
     public Review(String movieName, String description, String username){
@@ -25,26 +27,33 @@ public class Review {
         this.description = description;
         this.username = username;
     }
-    public Review(String id, String movieName, String description, String username, Integer Stars,Integer Likes){
+    public Review(String id, String movieName, String description, String username, String creatorId, Integer Stars,Integer Likes){
         this.id=id;
         this.movieName = movieName;
         this.description = description;
         this.username = username;
+        this.creatorId = creatorId;
         this.Stars = Stars;
         this.Likes = Likes;
     }
 
-    public Review(String id, String movieName, String description, String username, Integer Stars,Integer Likes, String movieImageUrl){
+    public Review(String id, String movieName, String description, String username, String creatorId, Integer Stars,Integer Likes, String movieImageUrl){
         this.id=id;
         this.movieName = movieName;
         this.description = description;
         this.username = username;
+        this.creatorId = creatorId;
         this.Stars = Stars;
         this.Likes = Likes;
         this.movieImageUrl = movieImageUrl;
     }
+    public void setId(String id) { this.id = id; }
 
-    List<String> actors;
+    public void setMovieImageUrl(String movieImageUrl) { this.movieImageUrl = movieImageUrl; }
+
+    public String getCreatorId() { return creatorId; }
+
+    public void setCreatorId(String creatorId) { this.creatorId = creatorId; }
 
     public List<String> getActors() {
         return actors;
@@ -112,6 +121,7 @@ public class Review {
         json.put("movieName", movieName);
         json.put("description", description);
         json.put("username", username);
+        json.put("creatorId", creatorId);
         json.put("Stars", Stars);
         json.put("Likes", Likes);
         json.put("movieImageUrl", movieImageUrl);
@@ -124,11 +134,12 @@ public class Review {
         String movieName = (String) json.get("movieName");
         String description = (String) json.get("description");
         String username=(String) json.get("username");
+        String creatorId =(String) json.get("creatorId");
         String movieImageUrl=(String) json.get("movieImageUrl");
         Integer Stars= Integer.parseInt(String.valueOf(json.get("Stars")));
         Integer Likes=Integer.parseInt(String.valueOf(json.get("Likes")));
         
-        Review review = new Review(id,movieName,description,username,Stars,Likes,movieImageUrl);
+        Review review = new Review(id,movieName,description,username,creatorId, Stars,Likes,movieImageUrl);
         return review;
     }
 

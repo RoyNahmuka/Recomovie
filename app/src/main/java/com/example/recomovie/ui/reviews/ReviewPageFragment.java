@@ -27,7 +27,7 @@ public class ReviewPageFragment extends Fragment {
         String reviewID =ReviewPageFragmentArgs.fromBundle(getArguments()).getReviewId();
         System.out.println(reviewID);
 
-        Review clickedReview = Model.instance.getReviewByIndex(Integer.parseInt(reviewID));
+        Review clickedReview = Model.instance.getReviewById(reviewID);
 
      //   ImageView movieImage = view.findViewById(R.id.review_info_movie_image);
         TextView movieName = view.findViewById(R.id.review_info_input_movie_name);

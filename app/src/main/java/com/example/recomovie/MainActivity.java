@@ -84,7 +84,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setLoggedIn(String currentUserName, NavController navController) {
-        setCreateReport();
         if (currentUserName == null) {
             headerText.setText("Welcome!");
         } else {
@@ -98,10 +97,10 @@ public class MainActivity extends AppCompatActivity {
             headerButton.setText("Login / Register");
             navController.navigate(R.id.nav_home);
         });
+        setTabsVisibility(true);
     }
 
     private void setNotLoggedIn(DrawerLayout drawer, NavController navController) {
-        setCreateReport();
         headerText.setText("");
         headerButton.setText("Login / Register");
 
@@ -109,27 +108,16 @@ public class MainActivity extends AppCompatActivity {
             navController.navigate(R.id.nav_login);
             drawer.closeDrawer(GravityCompat.START);
         });
-
         setTabsVisibility(false);
     }
 
     private void setTabsVisibility(boolean isVisible) {
         NavigationView navigationView = findViewById(R.id.nav_view);
         Menu nav_Menu = navigationView.getMenu();
-
-//        nav_Menu.findItem(R.id.account_tab).setVisible(isVisible);
+        nav_Menu.findItem(R.id.nav_user_profile).setVisible(isVisible);
     }
 
-    private void setCreateReport() {
-        NavigationView navigationView = findViewById(R.id.nav_view);
-        Menu nav_Menu = navigationView.getMenu();
-        if(checkLocationEnabled() && usersModel.getCurrentUser() != null) {
-//            nav_Menu.findItem(R.id.create_report).setVisible(true);
-        } else {
-//            nav_Menu.findItem(R.id.create_report).setVisible(false);
-        }
-    }
     private boolean checkLocationEnabled() {
-        return ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
+        return ContextCompat.checkSelfPermission(RecomovieApplication.getContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
     }
 }

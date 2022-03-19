@@ -8,11 +8,13 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.example.recomovie.model.common.Listener;
 import com.example.recomovie.model.users.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -34,9 +36,28 @@ public class ModelFirebase {
         Map<String, Object> json = review.toJson();
         db.collection("reviews")
                 .add(json)
+                .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentReference> task) {
+                        if (task.isSuccessful()) {
+                            String reviewId = task.getResult().getId();
+                            review.setId(reviewId);
+                            db.collection("reviews").document(reviewId).set(review);
+                        }
+                    }
+                })
+                .addOnSuccessListener(task -> listener.onComplete())
+                .addOnFailureListener(e -> listener.onComplete());
+    }
+
+    public void removeReview(String reviewId,Model.AddReviewListener listener){
+        db.collection("reviews")
+                .document(reviewId)
+                .delete()
                 .addOnSuccessListener(unused -> listener.onComplete())
                 .addOnFailureListener(e -> listener.onComplete());
     }
+
 
     public List<Review> setReviewList(){
         List<Review> reviewList=new LinkedList<>();
@@ -79,14 +100,6 @@ public class ModelFirebase {
                     listener.onComplete(list);
                 });
     }
-
-//    public void addUser(User user, Model.AddUserListener listener){
-//        Map<String, Object> json = user.toJson();
-//        db.collection("users")
-//                .add(json)
-//                .addOnSuccessListener(unused -> listener.onComplete())
-//                .addOnFailureListener(e -> listener.onComplete());
-//    }
 
 
     public void SpecificUserReviews(String username){

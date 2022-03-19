@@ -1,10 +1,11 @@
-package com.example.recomovie;
+package com.example.recomovie.ui.reviews;
 
 import static android.app.Activity.RESULT_OK;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.icu.lang.UScript;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -23,9 +24,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.recomovie.R;
 import com.example.recomovie.model.Model;
 import com.example.recomovie.model.ModelFirebase;
 import com.example.recomovie.model.Review;
+import com.example.recomovie.model.users.User;
+import com.example.recomovie.model.users.UsersModel;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -37,6 +41,8 @@ public class CreateReviewFragment extends Fragment {
     static final int REQUEST_IMAGE_CAPTURE = 1;
     static final int REQUEST_IMAGE_PICK = 2;
     final static int RESAULT_SUCCESS = 0;
+
+    private UsersModel usersModel = UsersModel.instance;
 
     TextView movieName;
     TextView description;
@@ -93,9 +99,14 @@ public class CreateReviewFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == REQUEST_IMAGE_CAPTURE){
             if(resultCode == RESULT_OK){
-                Bundle extras = data.getExtras();
-                imageBitmap = (Bitmap) extras.get("data");
-                movieImage.setImageBitmap(imageBitmap);
+                try {
+                    Bundle extras = data.getExtras();
+                    imageBitmap = (Bitmap) extras.get("data");
+                    movieImage.setImageBitmap(imageBitmap);
+                } catch (Exception e){
+                    e.printStackTrace();
+                    Toast.makeText(getContext(), "Failed to select image from gallery",Toast.LENGTH_LONG).show();
+                }
             }
         }else if (requestCode == REQUEST_IMAGE_PICK){
             if(resultCode == RESULT_OK){
@@ -114,7 +125,8 @@ public class CreateReviewFragment extends Fragment {
 
     public void onSubmit() {
         String id = String.valueOf(Model.instance.getNumOfReviews());
-        Review review = new Review(id, movieName.getText().toString(), description.getText().toString(), "username", 5, 5);
+        User user = usersModel.getCurrentUser();
+        Review review = new Review(id, movieName.getText().toString(), description.getText().toString(), user.getName(),user.getId(), 5, 5);
         if (imageBitmap != null) {
             Model.instance.saveImage(imageBitmap, id + ".jpg", url -> {
                 review.setMovieImage(url);
