@@ -9,6 +9,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 import com.example.recomovie.model.common.Listener;
+import com.example.recomovie.model.movie.Movie;
 import com.example.recomovie.model.users.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -82,6 +83,9 @@ public class ModelFirebase {
     public interface GetAllReviewListener{
         void onComplete(List<Review> list);
     }
+    public interface GetAllMovieListener{
+        void onComplete(List<Movie> list);
+    }
 
     public void getReviewList(GetAllReviewListener listener) {
         db.collection("reviews")
@@ -97,6 +101,25 @@ public class ModelFirebase {
                                     list.add(review);
                                 }
                             }
+                    }
+                    listener.onComplete(list);
+                });
+    }
+
+    public void getMovieList(GetAllMovieListener listener) {
+        db.collection("Movies")
+                //.whereGreaterThanOrEqualTo("updateDate",new Timestamp(lastUpdateDate,0))
+                .get()
+                .addOnCompleteListener(task -> {
+                    List<Movie> list = new LinkedList<Movie>();
+                    if (task.isSuccessful()){
+                        for (QueryDocumentSnapshot doc : task.getResult()) {
+                            Map<String, Object > data = doc.getData();
+                            Movie movie = Movie.create(data);
+                            if (movie != null) {
+                                list.add(movie);
+                            }
+                        }
                     }
                     listener.onComplete(list);
                 });

@@ -18,22 +18,29 @@ import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.recomovie.R;
+import com.example.recomovie.RecomovieApplication;
 import com.example.recomovie.model.Model;
 import com.example.recomovie.model.ModelFirebase;
 import com.example.recomovie.model.Review;
+import com.example.recomovie.model.movie.Movie;
 import com.example.recomovie.model.users.User;
 import com.example.recomovie.model.users.UsersModel;
+import com.google.firebase.firestore.GeoPoint;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.time.MonthDay;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
@@ -45,27 +52,66 @@ public class CreateReviewFragment extends Fragment {
 
     private UsersModel usersModel = UsersModel.instance;
 
-    TextView movieName;
+    String movieName;
     TextView description;
-    TextView actors;
+    List<String> actors;
+    String year;
+    GeoPoint geoPoint;
     ImageView movieImage;
     int stars;
     Button submit;
     ImageButton camera;
     ImageButton gallery;
     Bitmap imageBitmap;
+    List<Movie> movies;
+    List<String> movieNames;
+    Spinner moviesSpinner;
+
+    Movie currentMovie;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_create_review, container, false);
-        movieName = view.findViewById(R.id.create_review_movie_name_input);
         description = view.findViewById(R.id.create_review_description_input);
         camera = view.findViewById(R.id.create_review_camera);
         gallery = view.findViewById(R.id.create_review_gallery);
         submit = view.findViewById(R.id.create_review_submit_btn);
         movieImage = view.findViewById(R.id.create_review_image_input);
+        moviesSpinner = view.findViewById(R.id.movies_spinner);
+
+        Model.instance.getAllMovies(movieList-> {
+            movies = movieList;
+            movieNames = new ArrayList<>();
+            for (Movie movie : movies) {
+                movieNames.add(movie.getName());
+            }
+
+            ArrayAdapter<String> adp = new ArrayAdapter<String>(getContext(),
+                    android.R.layout.simple_list_item_1,movieNames);
+            adp.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            moviesSpinner.setAdapter(adp);
+
+            moviesSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+            {
+                @Override
+                public void onItemSelected(AdapterView<?> arg0, View arg1, int position, long id) {
+                    // TODO Auto-generated method stub
+                    currentMovie = movies.get(position);
+                    movieName = currentMovie.getName();
+                    actors = currentMovie.getActors();
+                    year = currentMovie.getYear();
+                    geoPoint = currentMovie.getGeoPoint();
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> arg0) {
+                    // TODO Auto-generated method stub
+                }
+            });
+
+        });
 
         camera.setOnClickListener(v -> {
             openCamera();
@@ -128,7 +174,7 @@ public class CreateReviewFragment extends Fragment {
         User user = usersModel.getCurrentUser();
         Random rand = new Random();
         String movieUrlId = user.getId() + rand.nextInt(32) + ".jpg";
-        Review review = new Review("", movieName.getText().toString(), description.getText().toString(), user.getName(),user.getId(), 5, 5);
+        Review review = new Review("", movieName, description.getText().toString(), user.getName(),user.getId(), 5, 5,null,year,actors,geoPoint);
         if (imageBitmap == null){
             Model.instance.addReview(review, () -> Navigation.findNavController(submit).navigateUp());
         }else{

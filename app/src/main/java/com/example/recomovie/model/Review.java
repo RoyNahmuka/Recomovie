@@ -5,48 +5,52 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.recomovie.R;
+import com.google.firebase.firestore.GeoPoint;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class Review {
     String id;
-    String movieName;
     String description;
     String movieImageUrl;
     String username;
     String creatorId;
-    Integer Stars;
+    Integer stars;
     Integer Likes;
+    String movieName;
+    String year;
     List<String> actors;
+    GeoPoint geoPoint;
 
     public Review(){};
-    public Review(String movieName, String description, String username){
-        this.movieName = movieName;
-        this.description = description;
-        this.username = username;
-    }
-    public Review(String id, String movieName, String description, String username, String creatorId, Integer Stars,Integer Likes){
+
+    public Review(String id, String movieName, String description, String username, String creatorId, Integer stars,Integer Likes){
         this.id=id;
         this.movieName = movieName;
         this.description = description;
         this.username = username;
         this.creatorId = creatorId;
-        this.Stars = Stars;
+        this.stars = stars;
         this.Likes = Likes;
     }
 
-    public Review(String id, String movieName, String description, String username, String creatorId, Integer Stars,Integer Likes, String movieImageUrl){
+    public Review(String id, String movieName, String description, String username, String creatorId, Integer stars,Integer Likes, String movieImageUrl, String year, List<String> actors, GeoPoint geoPoint){
         this.id=id;
         this.movieName = movieName;
         this.description = description;
         this.username = username;
         this.creatorId = creatorId;
-        this.Stars = Stars;
+        this.stars = stars;
         this.Likes = Likes;
         this.movieImageUrl = movieImageUrl;
+        this.year = year;
+        this.actors = actors;
+        this.geoPoint = geoPoint;
     }
+
     public void setId(String id) { this.id = id; }
 
     public void setMovieImageUrl(String movieImageUrl) { this.movieImageUrl = movieImageUrl; }
@@ -90,11 +94,11 @@ public class Review {
     }
 
     public Integer getStars() {
-        return Stars;
+        return stars;
     }
 
     public void setStars(Integer stars) {
-        Stars = stars;
+        stars = stars;
     }
 
     public Integer getLikes() {
@@ -111,6 +115,22 @@ public class Review {
 
     public String getMovieImageUrl() {return this.movieImageUrl;}
 
+    public String getYear() {
+        return year;
+    }
+
+    public void setYear(String year) {
+        this.year = year;
+    }
+
+    public GeoPoint getGeoPoint() {
+        return geoPoint;
+    }
+
+    public void setGeoPoint(GeoPoint geoPoint) {
+        this.geoPoint = geoPoint;
+    }
+
     public Map<String, Object> toJson() {
 
         Map<String, Object> json = new HashMap<>();
@@ -120,9 +140,12 @@ public class Review {
         json.put("description", description);
         json.put("username", username);
         json.put("creatorId", creatorId);
-        json.put("stars", Stars);
+        json.put("stars", stars);
         json.put("likes", Likes);
         json.put("movieImageUrl", movieImageUrl);
+        json.put("year",year);
+        json.put("actors",actors);
+        json.put("geopoint",geoPoint);
 
         return json;
 
@@ -134,10 +157,13 @@ public class Review {
         String username=(String) json.get("username");
         String creatorId =(String) json.get("creatorId");
         String movieImageUrl=(String) json.get("movieImageUrl");
-        Integer Stars= Integer.parseInt(String.valueOf(json.get("stars")));
+        Integer stars= Integer.parseInt(String.valueOf(json.get("stars")));
         Integer Likes=Integer.parseInt(String.valueOf(json.get("likes")));
+        String year = (String) json.get("year");
+        List<String> actors = (List<String>) json.get("actors");
+        GeoPoint geoPoint = (GeoPoint) json.get("geopoint");
 
-        Review review = new Review(id,movieName,description,username,creatorId, Stars,Likes,movieImageUrl);
+        Review review = new Review(id,movieName,description,username,creatorId, stars,Likes,movieImageUrl,year,actors,geoPoint);
         return review;
     }
 

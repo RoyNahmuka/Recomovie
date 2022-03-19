@@ -10,6 +10,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.recomovie.R;
 import com.example.recomovie.RecomovieApplication;
+import com.example.recomovie.model.common.Listener;
 import com.example.recomovie.model.users.User;
 import com.example.recomovie.model.users.UsersModel;
 
@@ -118,5 +119,9 @@ public class Model {
     }
     public void saveImage(Bitmap imageBitmap, String imageName, SaveImageListener listener) {
         modelFirebase.saveImage(imageBitmap, imageName, listener);
+    }
+
+    public void getAllMovies(ModelFirebase.GetAllMovieListener listener){
+        modelFirebase.getMovieList(listener);
     }
 }
