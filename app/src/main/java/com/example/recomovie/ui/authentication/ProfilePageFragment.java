@@ -92,7 +92,7 @@ public class ProfilePageFragment extends Fragment {
 
     private void refresh() {
         adapter.notifyDataSetChanged();
-        swipeRefresh.setRefreshing(false);
+//        swipeRefresh.setRefreshing(false);
     }
 
     class UserReviewListViewHolder extends RecyclerView.ViewHolder{
@@ -118,6 +118,7 @@ public class ProfilePageFragment extends Fragment {
                     Model.instance.removeReview(reviewId, ()->{});
                     Model.instance.refreshReviewsList();
                     viewModel.getReviewList().getValue().remove(position);
+                    refresh();
                 }
             });
             edit.setOnClickListener(new View.OnClickListener() {

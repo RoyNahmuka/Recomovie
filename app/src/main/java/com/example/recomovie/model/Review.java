@@ -53,8 +53,6 @@ public class Review {
 
     public String getCreatorId() { return creatorId; }
 
-    public void setCreatorId(String creatorId) { this.creatorId = creatorId; }
-
     public List<String> getActors() {
         return actors;
     }

@@ -88,7 +88,7 @@ public class RegisterFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_register, container, false);
         findViewElemnts(view);
-        progressBar.setVisibility(View.VISIBLE);
+        progressBar.setVisibility(View.INVISIBLE);
         errorMsg.setVisibility(View.INVISIBLE);
         submit.setOnClickListener(submitView -> {
             progressBar.setVisibility(View.VISIBLE);

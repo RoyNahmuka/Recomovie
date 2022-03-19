@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.recomovie.R;
@@ -25,6 +26,7 @@ public class LoginFragment extends Fragment {
     TextView errorMsg;
     Button Login;
     Button Register;
+    ProgressBar progressBar;
 
     public void findViewElements(View view){
         Register = view.findViewById(R.id.go_to_register);
@@ -32,6 +34,7 @@ public class LoginFragment extends Fragment {
         password = view.findViewById(R.id.login_password);
         Login = view.findViewById(R.id.login_button);
         errorMsg = view.findViewById(R.id.login_error_msg);
+        progressBar = view.findViewById(R.id.login_progress_bar);
 
     }
     public boolean isAllFieldsFulfilled(){
@@ -47,6 +50,7 @@ public class LoginFragment extends Fragment {
         View view= inflater.inflate(R.layout.fragment_login, container, false);
         findViewElements(view);
         errorMsg.setVisibility(View.INVISIBLE);
+        progressBar.setVisibility(View.INVISIBLE);
 
         Login.setOnClickListener(loginView -> {
             if(!isAllFieldsFulfilled()){
