@@ -48,9 +48,9 @@ public class Model {
     public LiveData<List<Review>> getAllUserReviews(){
         User user = usersModel.getCurrentUser();
         List<Review> userReviews = new LinkedList<>();
-        Log.d(String.valueOf(this.reviewList.getValue().size()), "size");
+
         for(Review review: this.reviewList.getValue()){
-            Log.d(review.getCreatorId() + " userId "+ user.getId(),"size");
+            Log.d(review.getMovieImageUrl(),"movieImage");
             if(review.getCreatorId().compareTo(user.getId()) == 0){
                 userReviews.add(review);
             }

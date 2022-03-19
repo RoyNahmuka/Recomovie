@@ -29,7 +29,7 @@ public class ReviewPageFragment extends Fragment {
 
         Review clickedReview = Model.instance.getReviewById(reviewID);
 
-     //   ImageView movieImage = view.findViewById(R.id.review_info_movie_image);
+        ImageView movieImage = view.findViewById(R.id.review_info_movie_image);
         TextView movieName = view.findViewById(R.id.review_info_input_movie_name);
         TextView description = view.findViewById(R.id.review_info_input_description);
         TextView category = view.findViewById(R.id.review_info_input_category);
@@ -41,11 +41,11 @@ public class ReviewPageFragment extends Fragment {
         movieName.setText(clickedReview.getMovieName());
         description.setText(clickedReview.getDescription());
 
-//        if (clickedReview.getMovieImageUrl() != null){
-//            Picasso.get()
-//                    .load(clickedReview.getMovieImageUrl())
-//                    .into(movieImage);
-//        }
+        if (clickedReview.getMovieImageUrl() != null){
+            Picasso.get()
+                    .load(clickedReview.getMovieImageUrl())
+                    .into(movieImage);
+        }
         return view;
     }
 }

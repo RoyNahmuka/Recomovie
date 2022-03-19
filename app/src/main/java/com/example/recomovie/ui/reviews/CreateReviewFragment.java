@@ -127,13 +127,18 @@ public class CreateReviewFragment extends Fragment {
     public void onSubmit() {
         User user = usersModel.getCurrentUser();
         Random rand = new Random();
+        String movieUrlId = user.getId() + rand.nextInt(32) + ".jpg";
         Review review = new Review("", movieName.getText().toString(), description.getText().toString(), user.getName(),user.getId(), 5, 5);
-        if (imageBitmap != null) {
-            Model.instance.saveImage(imageBitmap,  user.getId() + rand.nextInt(32) + ".jpg", url -> {
+        if (imageBitmap == null){
+            Model.instance.addReview(review, () -> Navigation.findNavController(submit).navigateUp());
+        }else{
+            Model.instance.saveImage(imageBitmap, movieUrlId + ".jpg", url -> {
                 review.setMovieImage(url);
+                Model.instance.addReview(review, () -> Navigation.findNavController(submit).navigateUp());
             });
         }
-        Model.instance.addReview(review, () -> Navigation.findNavController(submit).navigateUp());
     }
+
+
 
 }
