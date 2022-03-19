@@ -2,6 +2,7 @@ package com.example.recomovie.model.users;
 
 import static android.content.ContentValues.TAG;
 
+import android.annotation.SuppressLint;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
