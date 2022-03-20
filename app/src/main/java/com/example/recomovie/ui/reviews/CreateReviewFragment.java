@@ -56,9 +56,10 @@ public class CreateReviewFragment extends Fragment {
     final static int RESAULT_SUCCESS = 0;
 
     private UsersModel usersModel = UsersModel.instance;
+    private Model model = Model.instance;
 
     String movieName;
-    ReviewListRvViewModel reviewListRvViewModel;
+
     TextView description;
     List<String> actors;
     String year;
@@ -88,10 +89,11 @@ public class CreateReviewFragment extends Fragment {
         submit = view.findViewById(R.id.create_review_submit_btn);
         movieImage = view.findViewById(R.id.create_review_image_input);
         moviesSpinner = view.findViewById(R.id.movies_spinner);
-        reviewId = ReviewPageFragmentArgs.fromBundle(getArguments()).getReviewId();
+        reviewId = CreateReviewFragmentArgs.fromBundle(getArguments()).getReviewId();
+        System.out.println("**************Review ID:" + reviewId);
         if (reviewId != null) {
             Log.d("TAG", reviewId);
-            reviewListRvViewModel.getReview(reviewId, new Listener<Review>() {
+            model.getReview(reviewId, new Listener<Review>() {
                 @Override
                 public void onComplete(Review review) {
                     existingReview = review;
@@ -206,7 +208,7 @@ public class CreateReviewFragment extends Fragment {
     }
     private void editReview(Review review) {
         if (existingReview != null) {
-            reviewListRvViewModel.updateReview(review, reviewId, () -> {
+            model.updateReview(review, reviewId, () -> {
                 NavController navController = Navigation.findNavController(getView());
                 navController.navigateUp();
             });

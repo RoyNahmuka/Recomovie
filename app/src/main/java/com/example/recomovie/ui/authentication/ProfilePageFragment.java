@@ -81,10 +81,10 @@ public class ProfilePageFragment extends Fragment {
         list.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new UserReviewListViewAdapter();
         list.setAdapter(adapter);
-        adapter.setOnItemClickListener((v, position) -> {
-            String reviewId=viewModel.getReviewList().getValue().get(position).getId();
-            Navigation.findNavController(v).navigate(ReviewListRvFragmentDirections.actionReviewListRvFragmentToReviewPageFragment(reviewId));
-        });
+//        adapter.setOnItemClickListener((v, position) -> {
+//            String reviewId=viewModel.getReviewList().getValue().get(position).getId();
+//            //Navigation.findNavController(v).navigate(ReviewListRvFragmentDirections.actionReviewListRvFragmentToReviewPageFragment(reviewId));
+//        });
 
 
         return view;
@@ -123,13 +123,11 @@ public class ProfilePageFragment extends Fragment {
                 }
             });
             edit.setOnClickListener(new View.OnClickListener() {
-
                 @Override
                 public void onClick(View v) {
-//                    int position = getAdapterPosition();
-//                    listener.onItemCLick(v, position);
-                    NavController navController = Navigation.findNavController(v);
-                    navController.navigate(R.id.nav_create_review);
+                    int position = getAdapterPosition();
+                    ProfilePageFragmentDirections.ActionNavUserProfileToNavCreateReview direction = ProfilePageFragmentDirections.actionNavUserProfileToNavCreateReview(reviewId);
+                    Navigation.findNavController(v).navigate(direction);
                 }
             });
         }
