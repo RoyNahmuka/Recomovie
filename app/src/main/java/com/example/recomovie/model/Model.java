@@ -88,12 +88,20 @@ public class Model {
 
     public Review removeReviewByIndex(int index) {return reviewList.getValue().remove(index);}
 
+    public void getReview(String id, Listener listener) {
+        modelFirebase.getReview(id, listener);
+    }
+
     public interface AddReviewListener{
         void onComplete();
     }
 
     public interface GetReviewsListener{
         void onComplete(List<Review> myReviews);
+    }
+
+    public void updateReview(final Review review, final String reviewId, final EmptyListener listener) {
+        modelFirebase.updateReview(review, reviewId, listener);
     }
 
     public void removeReview(String reviewId, AddReviewListener listener){

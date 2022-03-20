@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -122,10 +123,13 @@ public class ProfilePageFragment extends Fragment {
                 }
             });
             edit.setOnClickListener(new View.OnClickListener() {
+
                 @Override
                 public void onClick(View v) {
-                    int position = getAdapterPosition();
-                    listener.onItemCLick(v, position);
+//                    int position = getAdapterPosition();
+//                    listener.onItemCLick(v, position);
+                    NavController navController = Navigation.findNavController(v);
+                    navController.navigate(R.id.nav_create_review);
                 }
             });
         }

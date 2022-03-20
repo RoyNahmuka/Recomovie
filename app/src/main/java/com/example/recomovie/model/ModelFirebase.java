@@ -16,9 +16,11 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.SetOptions;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -49,6 +51,33 @@ public class ModelFirebase {
                 })
                 .addOnSuccessListener(task -> listener.onComplete())
                 .addOnFailureListener(e -> listener.onComplete());
+    }
+
+    public void getReview(String id, Listener listener) {
+        db.collection("reviews")
+                .document(id).get().addOnCompleteListener(task -> {
+            Review review = null;
+            if (task.isSuccessful()){
+                DocumentSnapshot doc = task.getResult();
+                if (doc != null) {
+                    if (doc.exists()) {
+                        review = new Review();
+                        review.create(doc.getData());
+                    }
+                }
+            }
+            listener.onComplete(review);
+        });
+    }
+
+    public void updateReview(Review review, String reviewId, EmptyListener listener) {
+        Map<String, Object> reviewMap = review.toJson();
+        db.collection("reviews").document(reviewId).set(reviewMap, SetOptions.merge()).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (listener != null) listener.onComplete();
+            }
+        });
     }
 
     public void removeReview(String reviewId,Model.AddReviewListener listener){

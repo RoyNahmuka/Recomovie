@@ -12,9 +12,11 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,10 +34,13 @@ import com.example.recomovie.RecomovieApplication;
 import com.example.recomovie.model.Model;
 import com.example.recomovie.model.ModelFirebase;
 import com.example.recomovie.model.Review;
+import com.example.recomovie.model.common.Listener;
 import com.example.recomovie.model.movie.Movie;
 import com.example.recomovie.model.users.User;
 import com.example.recomovie.model.users.UsersModel;
 import com.google.firebase.firestore.GeoPoint;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -53,6 +58,7 @@ public class CreateReviewFragment extends Fragment {
     private UsersModel usersModel = UsersModel.instance;
 
     String movieName;
+    ReviewListRvViewModel reviewListRvViewModel;
     TextView description;
     List<String> actors;
     String year;
@@ -66,6 +72,8 @@ public class CreateReviewFragment extends Fragment {
     List<Movie> movies;
     List<String> movieNames;
     Spinner moviesSpinner;
+    String reviewId;
+    Review existingReview;
 
     Movie currentMovie;
 
@@ -80,7 +88,18 @@ public class CreateReviewFragment extends Fragment {
         submit = view.findViewById(R.id.create_review_submit_btn);
         movieImage = view.findViewById(R.id.create_review_image_input);
         moviesSpinner = view.findViewById(R.id.movies_spinner);
-
+        reviewId = ReviewPageFragmentArgs.fromBundle(getArguments()).getReviewId();
+        if (reviewId != null) {
+            Log.d("TAG", reviewId);
+            reviewListRvViewModel.getReview(reviewId, new Listener<Review>() {
+                @Override
+                public void onComplete(Review review) {
+                    existingReview = review;
+                    movieName=review.getMovieName();
+                    description.setText(review.getDescription());
+                }
+            });
+        }
         Model.instance.getAllMovies(movieList-> {
             movies = movieList;
             movieNames = new ArrayList<>();
@@ -129,6 +148,7 @@ public class CreateReviewFragment extends Fragment {
 
         return view;
     }
+
 
     private void openCamera() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -184,7 +204,20 @@ public class CreateReviewFragment extends Fragment {
             });
         }
     }
-
-
+    private void editReview(Review review) {
+        if (existingReview != null) {
+            reviewListRvViewModel.updateReview(review, reviewId, () -> {
+                NavController navController = Navigation.findNavController(getView());
+                navController.navigateUp();
+            });
+//        } else {
+//            ReviewListRvViewModel.addReview(review, () -> {
+//                NavController navController = Navigation.findNavController(getView());
+//                navController.navigateUp();
+//                navController.navigate(R.id.movielist_rv);
+//            });
+//        }
+        }
+    }
 
 }
