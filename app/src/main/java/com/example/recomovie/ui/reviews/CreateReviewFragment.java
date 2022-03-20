@@ -224,10 +224,23 @@ public class CreateReviewFragment extends Fragment {
         Review review = new Review("", movieName, description.getText().toString(), user.getName(),user.getId(), Integer.parseInt(stars),null,year,actors,geoPoint);
         if(existingReview != null) {
             Review currentReview = Model.instance.getReviewById(reviewId);
-            Model.instance.updateReview(currentReview, reviewId, () -> {
-                NavController navController = Navigation.findNavController(getView());
-                navController.navigateUp();
-            });
+            currentReview.setDescription(description.getText().toString());
+            if(imageBitmap != null) {
+                Model.instance.saveImage(imageBitmap, movieUrlId + ".jpg", url -> {
+                    currentReview.setMovieImage(url);
+                    Model.instance.updateReview(currentReview, reviewId, () -> {
+                        NavController navController = Navigation.findNavController(getView());
+                        navController.navigateUp();
+                    });
+                });
+            }
+            else {
+                Model.instance.updateReview(currentReview, reviewId, () -> {
+                    NavController navController = Navigation.findNavController(getView());
+                    navController.navigateUp();
+                });
+            }
+
         }else {
             if (imageBitmap == null) {
                 Model.instance.addReview(review, () -> Navigation.findNavController(submit).navigateUp());
