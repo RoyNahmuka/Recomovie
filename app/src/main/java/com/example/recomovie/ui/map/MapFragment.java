@@ -60,14 +60,11 @@ public class MapFragment extends Fragment {
                     for (Movie movie:movies){
                         geoMovieMap.put(movie.getName(),movie.getGeoPoint());
                     }
-                    System.out.println("this is     " + geoMovieMap);
 
                 for (String key: MovieCountMap.keySet()){
                     int counter;
                     counter = MovieCountMap.get(key);
                     GeoPoint geo = geoMovieMap.get(key);
-                    System.out.println(geo);
-                    System.out.println(counter);
 
                     LatLng latLng = new LatLng(geo.getLatitude(), geo.getLongitude());
                     googleMap.addMarker(new MarkerOptions().position(latLng).title(key + ": " + "have " + counter + " reviews"));
