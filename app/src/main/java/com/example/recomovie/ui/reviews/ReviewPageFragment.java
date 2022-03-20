@@ -47,7 +47,7 @@ public class ReviewPageFragment extends Fragment {
         description.setText(review.getDescription());
         actors.setText(movieActors);
         year.setText(review.getYear());
-        rate.setText(review.getStars() + "/5");
+        rate.setText(review.getStars()+ " ");
     }
 
     @Override

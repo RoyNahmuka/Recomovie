@@ -128,8 +128,8 @@ public class ProfilePageFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     int position = getAdapterPosition();
-                    ProfilePageFragmentDirections.ActionNavUserProfileToNavCreateReview direction = ProfilePageFragmentDirections.actionNavUserProfileToNavCreateReview(reviewId);
-                    Navigation.findNavController(v).navigate(direction);
+//                    ProfilePageFragmentDirections.ActionNavUserProfileToNavCreateReview direction = ProfilePageFragmentDirections.actionNavUserProfileToNavCreateReview(reviewId);
+//                    Navigation.findNavController(v).navigate(direction);
                 }
             });
         }

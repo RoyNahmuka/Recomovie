@@ -85,6 +85,7 @@ public class ReviewListRvFragment extends Fragment {
         TextView username;
         TextView description;
         ImageView movieImage;
+        TextView stars;
 
         public ReviewListViewHolder(@NonNull View itemView, OnItemClickListener listener) {
             super(itemView);
@@ -92,7 +93,7 @@ public class ReviewListRvFragment extends Fragment {
             username = itemView.findViewById(R.id.list_row_username);
             description = itemView.findViewById(R.id.list_row_movie_description);
             movieImage = itemView.findViewById(R.id.list_row_movie_image);
-
+            stars = itemView.findViewById(R.id.star_rate);
 
             //TODO: change this behave to navigation logic
             itemView.setOnClickListener(new View.OnClickListener() {
@@ -108,6 +109,8 @@ public class ReviewListRvFragment extends Fragment {
             description.setText(review.getDescription());
             movieName.setText(review.getMovieName());
             username.setText(review.getUsername());
+            stars.setText(review.getStars().toString());
+            System.out.println(stars);
             if(review.getMovieImageUrl() != null) {
                 Picasso.get()
                         .load(review.getMovieImageUrl())

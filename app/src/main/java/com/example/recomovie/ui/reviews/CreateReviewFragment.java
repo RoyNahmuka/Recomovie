@@ -66,7 +66,7 @@ public class CreateReviewFragment extends Fragment {
     String year;
     GeoPoint geoPoint;
     ImageView movieImage;
-    int stars;
+    String stars;
     Button submit;
     ImageButton camera;
     ImageButton gallery;
@@ -74,6 +74,7 @@ public class CreateReviewFragment extends Fragment {
     List<Movie> movies;
     List<String> movieNames;
     Spinner moviesSpinner;
+    Spinner rateSpinner;
     String reviewId;
     Review existingReview;
 
@@ -90,6 +91,7 @@ public class CreateReviewFragment extends Fragment {
         submit = view.findViewById(R.id.create_review_submit_btn);
         movieImage = view.findViewById(R.id.create_review_image_input);
         moviesSpinner = view.findViewById(R.id.movies_spinner);
+        rateSpinner = view.findViewById(R.id.rate_spinner);
         reviewId = ProfilePageFragmentArgs.fromBundle(getArguments()).getReviewId();
         if (reviewId != null) {
             Review review = Model.instance.getReviewById(reviewId);
@@ -108,10 +110,34 @@ public class CreateReviewFragment extends Fragment {
                 movieNames.add(movie.getName());
             }
 
-            ArrayAdapter<String> adp = new ArrayAdapter<String>(getContext(),
+            ArrayAdapter<String> adp1 = new ArrayAdapter<String>(getContext(),
                     android.R.layout.simple_list_item_1,movieNames);
-            adp.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            moviesSpinner.setAdapter(adp);
+            adp1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            moviesSpinner.setAdapter(adp1);
+
+
+            List<String> rates = new LinkedList<>();
+            for (Integer i=1;i<6;i++){
+                rates.add(i.toString());
+            }
+            ArrayAdapter<String> adp2 = new ArrayAdapter<String>(getContext(),
+                    android.R.layout.simple_list_item_1,rates);
+            adp2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            rateSpinner.setAdapter(adp2);
+
+            rateSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+            {
+                @Override
+                public void onItemSelected(AdapterView<?> arg0, View arg1, int position, long id) {
+                    // TODO Auto-generated method stub
+                    stars = rates.get(position);
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> arg0) {
+                    // TODO Auto-generated method stub
+                }
+            });
 
             moviesSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
             {
@@ -195,7 +221,7 @@ public class CreateReviewFragment extends Fragment {
         User user = usersModel.getCurrentUser();
         Random rand = new Random();
         String movieUrlId = user.getId() + rand.nextInt(32) + ".jpg";
-        Review review = new Review("", movieName, description.getText().toString(), user.getName(),user.getId(), 5, 5,null,year,actors,geoPoint);
+        Review review = new Review("", movieName, description.getText().toString(), user.getName(),user.getId(), Integer.parseInt(stars),null,year,actors,geoPoint);
         if(existingReview != null) {
             Review currentReview = Model.instance.getReviewById(reviewId);
             Model.instance.updateReview(currentReview, reviewId, () -> {
