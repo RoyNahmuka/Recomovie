@@ -20,7 +20,6 @@ public class ProfilePageRvViewModel extends ViewModel {
     }
 
     public LiveData<List<Review>> getReviewList() {
-        Log.d(String.valueOf(reviewList.getValue().size()), "tea");
         return reviewList;
     }
 

@@ -7,6 +7,8 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.example.recomovie.model.EmptyListener;
+import com.example.recomovie.model.Review;
 import com.example.recomovie.model.common.Listener;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -16,6 +18,9 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
+
+import java.util.Map;
 
 public class UsersModelFireBase {
     private static final String USERS_COLLECTION = "users";
@@ -110,10 +115,19 @@ public class UsersModelFireBase {
         auth.signOut();
     }
 
-    private  void updateUserProfile(User user, final Listener<Boolean> listener) {
+    public void updateUserProfile(User user, final Listener<Boolean> listener) {
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder().setDisplayName(user.getName()).build();
 
         firebaseUser.updateProfile(profileUpdates).addOnCompleteListener(task -> listener.onComplete(task.isSuccessful()));
+    }
+
+    public void updateUser(User user, EmptyListener listener) {
+        db.collection("users").document(user.getId()).set(user, SetOptions.merge()).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (listener != null) listener.onComplete();
+            }
+        });
     }
 }

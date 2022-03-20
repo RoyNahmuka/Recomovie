@@ -94,6 +94,9 @@ public class CreateReviewFragment extends Fragment {
         rateSpinner = view.findViewById(R.id.rate_spinner);
         reviewId = ProfilePageFragmentArgs.fromBundle(getArguments()).getReviewId();
         if (reviewId != null) {
+            TextView movieNameText = view.findViewById(R.id.create_review_movie_name_title);
+            movieNameText.setVisibility(View.INVISIBLE);
+            moviesSpinner.setVisibility(View.INVISIBLE);
             Review review = Model.instance.getReviewById(reviewId);
             System.out.println(review.getDescription());
             existingReview = review;

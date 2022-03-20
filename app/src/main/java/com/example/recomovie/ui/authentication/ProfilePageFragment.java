@@ -5,9 +5,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -29,9 +27,6 @@ import com.example.recomovie.model.users.UsersModel;
 import com.example.recomovie.ui.reviews.ReviewListRvFragmentDirections;
 import com.squareup.picasso.Picasso;
 
-import org.jetbrains.annotations.NotNull;
-
-import java.util.LinkedList;
 import java.util.List;
 
 
@@ -43,6 +38,8 @@ public class ProfilePageFragment extends Fragment {
     TextView username;
     TextView name;
     TextView phone;
+    Button edit;
+    ImageView profileImage;
     List<Review> reviewList;
     interface OnItemClickListener {
         void onItemCLick(View v,int position);
@@ -53,17 +50,20 @@ public class ProfilePageFragment extends Fragment {
         viewModel = new ViewModelProvider(this).get(ProfilePageRvViewModel.class);
     }
 
-
-
     public void displayUserDate(User user){
-        if(user != null) {
-            username.setText(user.getEmail());
-            name.setText(user.getName());
-            phone.setText(user.getPhoneNumber());
+        usersModel.getUser(user.getId(), currentUser ->{
+        if(currentUser != null) {
+            username.setText(currentUser.getName());
+            name.setText(currentUser.getEmail());
+            phone.setText(currentUser.getPhoneNumber());
+            if(currentUser.getImageUrl() != null)
+            Picasso.get()
+                    .load(currentUser.getImageUrl())
+                    .into(profileImage);
         }
+            profileImage.setVisibility(View.VISIBLE);
+        });
     }
-
-
 
 
     @Override
@@ -72,30 +72,41 @@ public class ProfilePageFragment extends Fragment {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_profile_page, container, false);
         User currentUser = usersModel.getCurrentUser();
-        username = view.findViewById(R.id.profile_details_username);
-        name = view.findViewById(R.id.profile_details_full_name);
-        phone = view.findViewById(R.id.profile_details_phone);
+        username = view.findViewById(R.id.profile_edit_details_username);
+        name = view.findViewById(R.id.profile_edit_details_full_name);
+        edit = view.findViewById(R.id.profile_edit);
+        profileImage = view.findViewById(R.id.profile_image);
+        phone = view.findViewById(R.id.profile_phone);
+        profileImage.setVisibility(View.INVISIBLE);
         Log.d(currentUser.getEmail() + currentUser.getName()+ currentUser.getPhoneNumber(),"test");
         displayUserDate(currentUser);
-
         RecyclerView list = view.findViewById(R.id.myReviewsList);
         list.setHasFixedSize(true);
         list.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        usersModel.onUserChange(data -> {
+            if (data != null) {
+                username.setText(data.getDisplayName());
+            }
+        });
+
+        edit.setOnClickListener(v -> {
+            Navigation.findNavController(v).navigate(R.id.nav_edit_profile);
+        });
         adapter = new UserReviewListViewAdapter();
         list.setAdapter(adapter);
-//        adapter.setOnItemClickListener((v, position) -> {
-//            String reviewId=viewModel.getReviewList().getValue().get(position).getId();
-//            //Navigation.findNavController(v).navigate(ReviewListRvFragmentDirections.actionReviewListRvFragmentToReviewPageFragment(reviewId));
-//        });
+        adapter.setOnItemClickListener((v, position) -> {
+            String reviewId=viewModel.getReviewList().getValue().get(position).getId();
+            Navigation.findNavController(v).navigate(ReviewListRvFragmentDirections.actionReviewListRvFragmentToReviewPageFragment(reviewId));
+        });
 
 
         return view;
     }
 
 
-    private void refresh() {
+    public void refresh() {
         adapter.notifyDataSetChanged();
-//        swipeRefresh.setRefreshing(false);
     }
 
     class UserReviewListViewHolder extends RecyclerView.ViewHolder{
@@ -127,9 +138,8 @@ public class ProfilePageFragment extends Fragment {
             edit.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    int position = getAdapterPosition();
-//                    ProfilePageFragmentDirections.ActionNavUserProfileToNavCreateReview direction = ProfilePageFragmentDirections.actionNavUserProfileToNavCreateReview(reviewId);
-//                    Navigation.findNavController(v).navigate(direction);
+                    ProfilePageFragmentDirections.ActionNavUserProfileToNavCreateReview direction = ProfilePageFragmentDirections.actionNavUserProfileToNavCreateReview(reviewId);
+                    Navigation.findNavController(v).navigate(direction);
                 }
             });
         }

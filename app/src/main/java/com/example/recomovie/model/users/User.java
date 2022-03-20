@@ -1,5 +1,7 @@
 package com.example.recomovie.model.users;
 
+import android.widget.ImageView;
+
 import java.io.Serializable;
 
 import androidx.annotation.NonNull;
@@ -15,6 +17,17 @@ public class User implements Serializable {
     private String name;
     private String email;
     private String phoneNumber;
+    private String imageUrl;
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    private ImageView profileImage;
 
     public User() {}
     public User(String name, String email) {
@@ -34,6 +47,13 @@ public class User implements Serializable {
         this.phoneNumber = phoneNumber;
         this.id = id;
     }
+    public User(String name, String email,String phoneNumber, String id, String imageUrl){
+        this.name = name;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.id = id;
+        this.imageUrl = imageUrl;
+    }
 
     @NonNull
     public String getId() {
@@ -43,6 +63,7 @@ public class User implements Serializable {
     public void setId(@NonNull String id) {
         this.id = id;
     }
+
 
     public String getName() {
         return name;

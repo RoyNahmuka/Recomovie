@@ -1,4 +1,5 @@
 package com.example.recomovie.model.users;
+import com.example.recomovie.model.EmptyListener;
 import com.example.recomovie.model.common.Listener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -31,5 +32,8 @@ public class UsersModel {
 
     public void onUserChange(Listener<FirebaseUser> firebaseUserListener) {
         usersModelFireBase.onUserChange(firebaseUserListener);
+    }
+    public void userUpdate(User user, EmptyListener listener){
+        usersModelFireBase.updateUser(user, listener);
     }
 }
