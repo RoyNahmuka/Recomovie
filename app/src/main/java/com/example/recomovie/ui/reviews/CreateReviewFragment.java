@@ -38,6 +38,7 @@ import com.example.recomovie.model.common.Listener;
 import com.example.recomovie.model.movie.Movie;
 import com.example.recomovie.model.users.User;
 import com.example.recomovie.model.users.UsersModel;
+import com.example.recomovie.ui.authentication.ProfilePageFragmentArgs;
 import com.google.firebase.firestore.GeoPoint;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
@@ -89,18 +90,16 @@ public class CreateReviewFragment extends Fragment {
         submit = view.findViewById(R.id.create_review_submit_btn);
         movieImage = view.findViewById(R.id.create_review_image_input);
         moviesSpinner = view.findViewById(R.id.movies_spinner);
-        reviewId = CreateReviewFragmentArgs.fromBundle(getArguments()).getReviewId();
-        System.out.println("**************Review ID:" + reviewId);
+        reviewId = ProfilePageFragmentArgs.fromBundle(getArguments()).getReviewId();
         if (reviewId != null) {
-            Log.d("TAG", reviewId);
-            model.getReview(reviewId, new Listener<Review>() {
-                @Override
-                public void onComplete(Review review) {
-                    existingReview = review;
-                    movieName=review.getMovieName();
-                    description.setText(review.getDescription());
-                }
-            });
+            Review review = Model.instance.getReviewById(reviewId);
+            System.out.println(review.getDescription());
+            existingReview = review;
+            movieName=review.getMovieName();
+            description.setText(review.getDescription());
+            Picasso.get()
+                    .load(review.getMovieImageUrl())
+                    .into(movieImage);
         }
         Model.instance.getAllMovies(movieList-> {
             movies = movieList;
@@ -197,28 +196,22 @@ public class CreateReviewFragment extends Fragment {
         Random rand = new Random();
         String movieUrlId = user.getId() + rand.nextInt(32) + ".jpg";
         Review review = new Review("", movieName, description.getText().toString(), user.getName(),user.getId(), 5, 5,null,year,actors,geoPoint);
-        if (imageBitmap == null){
-            Model.instance.addReview(review, () -> Navigation.findNavController(submit).navigateUp());
-        }else{
-            Model.instance.saveImage(imageBitmap, movieUrlId + ".jpg", url -> {
-                review.setMovieImage(url);
+        if(existingReview != null) {
+            Review currentReview = Model.instance.getReviewById(reviewId);
+            Model.instance.updateReview(currentReview, reviewId, () -> {
+                NavController navController = Navigation.findNavController(getView());
+                navController.navigateUp();
+            });
+        }else {
+            if (imageBitmap == null) {
                 Model.instance.addReview(review, () -> Navigation.findNavController(submit).navigateUp());
-            });
+            } else {
+                Model.instance.saveImage(imageBitmap, movieUrlId + ".jpg", url -> {
+                    review.setMovieImage(url);
+                    Model.instance.addReview(review, () -> Navigation.findNavController(submit).navigateUp());
+                });
+            }
         }
     }
-    private void editReview(Review review) {
-        if (existingReview != null) {
-            model.updateReview(review, reviewId, () -> {
-                NavController navController = Navigation.findNavController(getView());
-                navController.navigateUp();
-            });
-        } else {
-            Model.instance.addReview(review, () -> {
-                NavController navController = Navigation.findNavController(getView());
-                navController.navigateUp();
-                navController.navigate(R.id.movielist_rv);
-            });
-        }
-        }
-    }
+}
 

@@ -29,6 +29,8 @@ import com.example.recomovie.model.users.UsersModel;
 import com.example.recomovie.ui.reviews.ReviewListRvFragmentDirections;
 import com.squareup.picasso.Picasso;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.LinkedList;
 import java.util.List;
 
