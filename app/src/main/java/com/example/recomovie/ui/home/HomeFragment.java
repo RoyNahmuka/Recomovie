@@ -16,6 +16,7 @@ import androidx.navigation.Navigation;
 
 import com.example.recomovie.R;
 import com.example.recomovie.databinding.FragmentHomeBinding;
+import com.example.recomovie.model.Model;
 import com.example.recomovie.model.users.User;
 import com.example.recomovie.model.users.UsersModel;
 
@@ -29,7 +30,7 @@ public class HomeFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         homeViewModel =
                 new ViewModelProvider(this).get(HomeViewModel.class);
-
+        Model.instance.refreshReviewsList();
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         Button button = root.findViewById(R.id.home_button);

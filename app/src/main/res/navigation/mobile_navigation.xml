@@ -67,7 +67,8 @@
     <fragment
         android:id="@+id/reviewPageFragment"
         android:name="com.example.recomovie.ui.reviews.ReviewPageFragment"
-        android:label="Review Info">
+        android:label="Review Info"
+        tools:layout="@layout/fragment_review_page">
         <argument
             android:name="review_id"
             app:argType="string" />

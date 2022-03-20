@@ -15,9 +15,40 @@ import com.example.recomovie.model.Review;
 import com.squareup.picasso.Picasso;
 
 public class ReviewPageFragment extends Fragment {
+    ImageView movieImage;
+    TextView movieName;
+    TextView description;
+    TextView category;
+    TextView actors;
+    TextView year;
+    TextView country;
+    TextView rate;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    public void findViewElements(View view) {
+         movieImage = view.findViewById(R.id.review_info_movie_image);
+         movieName = view.findViewById(R.id.review_info_input_movie_name);
+         description = view.findViewById(R.id.review_info_input_description);
+         actors = view.findViewById(R.id.review_info_input_actors);
+         year = view.findViewById(R.id.review_info_input_year);
+         rate = view.findViewById(R.id.review_info_input_stars);
+    }
+
+    public void setElementsData(Review review){
+        String movieActors = "";
+        for(String actor: review.getActors()){
+            movieActors += actor + "\n";
+        }
+        if (review.getMovieImageUrl() != null){
+        Picasso.get()
+                .load(review.getMovieImageUrl())
+                .into(movieImage);
+    }
+        movieName.setText(review.getMovieName());
+        description.setText(review.getDescription());
+        actors.setText(movieActors);
+        year.setText(review.getYear());
+        rate.setText(review.getStars() + "/5");
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -25,27 +56,9 @@ public class ReviewPageFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_review_page, container, false);
         String reviewID =ReviewPageFragmentArgs.fromBundle(getArguments()).getReviewId();
-        System.out.println(reviewID);
-
-        Review clickedReview = Model.instance.getReviewById(reviewID);
-
-        ImageView movieImage = view.findViewById(R.id.review_info_movie_image);
-        TextView movieName = view.findViewById(R.id.review_info_input_movie_name);
-        TextView description = view.findViewById(R.id.review_info_input_description);
-        TextView category = view.findViewById(R.id.review_info_input_category);
-//        TextView actors = findViewById(R.id.review_info_input_actors);
-        TextView year = view.findViewById(R.id.review_info_input_year);
-        TextView country = view.findViewById(R.id.review_info_input_country);
-        TextView rate = view.findViewById(R.id.review_info_input_stars);
-
-        movieName.setText(clickedReview.getMovieName());
-        description.setText(clickedReview.getDescription());
-
-        if (clickedReview.getMovieImageUrl() != null){
-            Picasso.get()
-                    .load(clickedReview.getMovieImageUrl())
-                    .into(movieImage);
-        }
+        Review review = Model.instance.getReviewById(reviewID);
+        findViewElements(view);
+        setElementsData(review);
         return view;
     }
 }

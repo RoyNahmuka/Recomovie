@@ -210,14 +210,13 @@ public class CreateReviewFragment extends Fragment {
                 NavController navController = Navigation.findNavController(getView());
                 navController.navigateUp();
             });
-//        } else {
-//            ReviewListRvViewModel.addReview(review, () -> {
-//                NavController navController = Navigation.findNavController(getView());
-//                navController.navigateUp();
-//                navController.navigate(R.id.movielist_rv);
-//            });
-//        }
+        } else {
+            Model.instance.addReview(review, () -> {
+                NavController navController = Navigation.findNavController(getView());
+                navController.navigateUp();
+                navController.navigate(R.id.movielist_rv);
+            });
+        }
         }
     }
 
-}
