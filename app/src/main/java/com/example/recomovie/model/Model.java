@@ -11,6 +11,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.example.recomovie.R;
 import com.example.recomovie.RecomovieApplication;
 import com.example.recomovie.model.common.Listener;
+import com.example.recomovie.model.movie.Movie;
 import com.example.recomovie.model.users.User;
 import com.example.recomovie.model.users.UsersModel;
 
@@ -28,6 +29,7 @@ public class Model {
 
     MutableLiveData<List<Review>> reviewList = new MutableLiveData<List<Review>>();
     MutableLiveData<ReviewListLoadingState> reviewListLoadingState = new MutableLiveData<ReviewListLoadingState>();
+    MutableLiveData<MovieListLoadingState> movieListLoadingState = new MutableLiveData<MovieListLoadingState>();
 
 
 
@@ -38,13 +40,22 @@ public class Model {
         loading,
         loaded
     }
+    public LiveData<MovieListLoadingState> getMovieListLoadingState() {
+        return movieListLoadingState;
+    }
+        public enum MovieListLoadingState{
+        loading,
+        loaded
+    }
     ModelFirebase modelFirebase = new ModelFirebase();
     private Model() {
         reviewListLoadingState.setValue(ReviewListLoadingState.loaded);
     }
 
     public LiveData<List<Review>> getAll(){
-        if (reviewList.getValue() == null) { refreshReviewsList(); };
+        if (reviewList.getValue() == null) {
+            refreshReviewsList();
+        };
         return reviewList;
     }
 
@@ -68,14 +79,23 @@ public class Model {
         modelFirebase.getReviewList(new ModelFirebase.GetAllReviewListener() {
             @Override
             public void onComplete(List<Review> list) {
-               // List<Review> stList = AppLocalDb.db.reviewDao().getAll();
                 reviewList.postValue(list);
                 reviewListLoadingState.postValue(ReviewListLoadingState.loaded);
                     }
-
-
         });
     }
+
+    public void refreshMoviesList(){
+        movieListLoadingState.setValue(MovieListLoadingState.loading);
+        modelFirebase.getMovieList(movies -> {
+            executor.execute(() -> {
+                for (Movie movie : movies) {
+                    AppLocalDb.db.movieDao().insertAll(movie);
+                }});
+
+            });
+        }
+
 
 
     public int getNumOfReviews() { return  reviewList.getValue().size(); }
@@ -132,6 +152,14 @@ public class Model {
     }
 
     public void getAllMovies(ModelFirebase.GetAllMovieListener listener){
+        executor.execute(()->{
+           listener.onComplete(AppLocalDb.db.movieDao().getAll());
+        });
+    }
+
+    public void getMoviesFirebase(ModelFirebase.GetAllMovieListener listener){
         modelFirebase.getMovieList(listener);
     }
+
+
 }

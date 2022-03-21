@@ -6,18 +6,20 @@ import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
+import com.example.recomovie.model.movie.Movie;
+
 import java.util.List;
 
 @Dao
-public interface ReviewDao {
+public interface MovieDao {
 
-    @Query("select * from Review")
-    List<Review> getAll();
+    @Query("select * from Movie")
+    List<Movie> getAll();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertAll(Review... students);
+    void insertAll(Movie... movies);
 
     @Delete
-    void delete(Review student);
+    void delete(Movie movie);
 
 }

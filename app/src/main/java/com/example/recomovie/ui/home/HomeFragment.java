@@ -31,6 +31,7 @@ public class HomeFragment extends Fragment {
         homeViewModel =
                 new ViewModelProvider(this).get(HomeViewModel.class);
         Model.instance.refreshReviewsList();
+        Model.instance.refreshMoviesList();
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         Button button = root.findViewById(R.id.home_button);

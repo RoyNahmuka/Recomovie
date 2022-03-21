@@ -54,7 +54,7 @@ public class MapFragment extends Fragment {
 
                 // Add a marker in Sydney and move the camera
 
-                Model.instance.getAllMovies(movieList-> {
+                Model.instance.getMoviesFirebase(movieList-> {
                     movies = movieList;
 
                     for (Movie movie:movies){

@@ -2,16 +2,25 @@ package com.example.recomovie.model.movie;
 
 import android.location.Geocoder;
 
+import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
+
 import com.example.recomovie.model.Review;
 import com.google.firebase.firestore.GeoPoint;
 
 import java.util.List;
 import java.util.Map;
 
+@Entity
 public class Movie {
+    @PrimaryKey
+    @NonNull
     String name;
     String year;
     List<String> actors;
+    @Ignore
     GeoPoint geoPoint;
 
     public Movie(String name, String year, List<String> actors, GeoPoint geoPoint) {
@@ -20,7 +29,9 @@ public class Movie {
         this.actors = actors;
         this.geoPoint = geoPoint;
     }
+    public Movie() {
 
+    }
     public String getName() {
         return name;
     }
