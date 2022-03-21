@@ -49,6 +49,7 @@ public class ProfileEditFragment extends Fragment {
         camera = view.findViewById(R.id.profile_edit_camera);
         profileImage = view.findViewById(R.id.profile_image);
         profileImage.setVisibility(View.INVISIBLE);
+
         User user = usersModel.getCurrentUser();
         username.setText(user.getEmail());
         usersModel.getUser(user.getId(), currentUser -> {

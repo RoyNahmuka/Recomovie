@@ -41,6 +41,8 @@ public class ProfilePageFragment extends Fragment {
     Button edit;
     ImageView profileImage;
     List<Review> reviewList;
+    private ProfilePageRvViewModel pageRvViewModel;
+
     interface OnItemClickListener {
         void onItemCLick(View v,int position);
     }
@@ -70,6 +72,7 @@ public class ProfilePageFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        pageRvViewModel= new ViewModelProvider(this).get(ProfilePageRvViewModel.class);
         View view =  inflater.inflate(R.layout.fragment_profile_page, container, false);
         User currentUser = usersModel.getCurrentUser();
         username = view.findViewById(R.id.profile_edit_details_username);
@@ -78,7 +81,7 @@ public class ProfilePageFragment extends Fragment {
         profileImage = view.findViewById(R.id.profile_image);
         phone = view.findViewById(R.id.profile_phone);
         profileImage.setVisibility(View.INVISIBLE);
-        Log.d(currentUser.getEmail() + currentUser.getName()+ currentUser.getPhoneNumber(),"test");
+
         displayUserDate(currentUser);
         RecyclerView list = view.findViewById(R.id.myReviewsList);
         list.setHasFixedSize(true);
@@ -104,9 +107,13 @@ public class ProfilePageFragment extends Fragment {
         return view;
     }
 
+    void reloadData() {
+        pageRvViewModel.refreshAllReviews(() -> {});
+    }
 
     public void refresh() {
         adapter.notifyDataSetChanged();
+        reloadData();
     }
 
     class UserReviewListViewHolder extends RecyclerView.ViewHolder{

@@ -38,6 +38,7 @@ import com.example.recomovie.model.common.Listener;
 import com.example.recomovie.model.movie.Movie;
 import com.example.recomovie.model.users.User;
 import com.example.recomovie.model.users.UsersModel;
+import com.example.recomovie.ui.authentication.ProfilePageFragment;
 import com.example.recomovie.ui.authentication.ProfilePageFragmentArgs;
 import com.google.firebase.firestore.GeoPoint;
 import com.squareup.picasso.Callback;
@@ -58,6 +59,7 @@ public class CreateReviewFragment extends Fragment {
 
     private UsersModel usersModel = UsersModel.instance;
     private Model model = Model.instance;
+    ProfilePageFragment pageFragment = new ProfilePageFragment();
 
     String movieName;
 
@@ -173,6 +175,7 @@ public class CreateReviewFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 onSubmit();
+
             }
         });
 

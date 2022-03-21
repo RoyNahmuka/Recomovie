@@ -29,6 +29,8 @@ public class Model {
     MutableLiveData<List<Review>> reviewList = new MutableLiveData<List<Review>>();
     MutableLiveData<ReviewListLoadingState> reviewListLoadingState = new MutableLiveData<ReviewListLoadingState>();
 
+
+
     public LiveData<ReviewListLoadingState> getReviewListLoadingState() {
         return reviewListLoadingState;
     }

@@ -18,6 +18,7 @@ public class ReviewListRvViewModel extends ViewModel {
     LiveData<List<Review>> reviewList;
 
     public ReviewListRvViewModel(){
+        model=Model.instance;
         reviewList = Model.instance.getAll();
     }
 
@@ -27,6 +28,7 @@ public class ReviewListRvViewModel extends ViewModel {
     public void getReview(String reviewId, Listener<Review> listener) {
         model.getReview(reviewId, listener);
     }
+
 
     public void updateReview(Review review, String reviewID, EmptyListener listener) {
         User user = UsersModel.instance.getCurrentUser();
