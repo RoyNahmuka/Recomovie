@@ -50,7 +50,6 @@ public class UsersModelFireBase {
                         }
                         listener.onComplete(user);
                     } else {
-                        Log.d(TAG, "Error getting documents: ", task.getException());
                     }
                 });
 
@@ -86,7 +85,6 @@ public class UsersModelFireBase {
                                 }
                             });
                         } else {
-                            Log.w("TAG", "Failed to register user", task.getException());
                             if (listener != null) {
                                 listener.onComplete(task);
                             }
@@ -103,7 +101,6 @@ public class UsersModelFireBase {
                             listener.onComplete(true);
                         }
                     } else {
-                        Log.i("TAG", "Failed to login user", task.getException());
                         if (listener != null) {
                             listener.onComplete(false);
                         }

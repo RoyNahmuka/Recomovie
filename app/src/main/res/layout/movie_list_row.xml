@@ -3,8 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="200dp"
-    android:clickable="true">
+    android:layout_height="170dp"
+    android:layout_marginBottom="10px"
+    android:width="10dp"
+
+    android:background="#CDCFF8"
+    android:clickable="true"
+    android:color="@color/black">
 
     <TextView
         android:id="@+id/list_row_movie_name"
@@ -12,6 +17,7 @@
         android:layout_height="29dp"
         android:layout_marginTop="8dp"
         android:text="TextView"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.807"
         app:layout_constraintStart_toStartOf="parent"
@@ -26,8 +32,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.807"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.324" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/list_row_username"
@@ -35,6 +40,7 @@
         android:layout_height="31dp"
         android:layout_marginTop="132dp"
         android:text="TextView"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.029"
         app:layout_constraintStart_toStartOf="parent"
@@ -58,26 +64,26 @@
 
     <ImageView
         android:id="@+id/static_star"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="35dp"
+        android:layout_height="38dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.889"
+        app:layout_constraintHorizontal_bias="0.957"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.779"
+        app:layout_constraintVertical_bias="0.893"
         app:srcCompat="@android:drawable/btn_star_big_on" />
 
     <TextView
         android:id="@+id/star_rate"
-        android:layout_width="20dp"
-        android:layout_height="34dp"
+        android:layout_width="25dp"
+        android:layout_height="37dp"
         android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.81"
+        app:layout_constraintHorizontal_bias="0.852"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.777" />
+        app:layout_constraintVertical_bias="0.887" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

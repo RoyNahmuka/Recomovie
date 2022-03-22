@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,6 +37,7 @@ public class ProfileEditFragment extends Fragment {
     static final int REQUEST_IMAGE_CAPTURE = 1;
     ImageView profileImage;
     Bitmap imageBitmap;
+    ProgressBar progressBar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -49,7 +51,8 @@ public class ProfileEditFragment extends Fragment {
         camera = view.findViewById(R.id.profile_edit_camera);
         profileImage = view.findViewById(R.id.profile_image);
         profileImage.setVisibility(View.INVISIBLE);
-
+        progressBar = view.findViewById(R.id.editProfile_progressBar);
+        progressBar.setVisibility(View.INVISIBLE);
         User user = usersModel.getCurrentUser();
         username.setText(user.getEmail());
         usersModel.getUser(user.getId(), currentUser -> {
@@ -96,7 +99,7 @@ public class ProfileEditFragment extends Fragment {
     public void onSubmit(User user, View v) {
         String phoneNumber = phone.getText().toString();
         String fullName = name.getText().toString();
-
+        progressBar.setVisibility(View.VISIBLE);
         if (imageBitmap != null) {
             Model.instance.saveImage(imageBitmap, user.getId() + ".jpg", url -> {
                 User newUser = new User(fullName, user.getEmail(), phoneNumber, user.getId(), url);

@@ -9,6 +9,7 @@ import androidx.lifecycle.LiveData;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.example.recomovie.R;
 import com.example.recomovie.model.Model;
@@ -53,7 +54,6 @@ public class MapFragment extends Fragment {
             public void onMapReady(@NonNull GoogleMap googleMap) {
 
                 // Add a marker in Sydney and move the camera
-
                 Model.instance.getMoviesFirebase(movieList-> {
                     movies = movieList;
 

@@ -25,6 +25,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -79,7 +80,7 @@ public class CreateReviewFragment extends Fragment {
     Spinner rateSpinner;
     String reviewId;
     Review existingReview;
-
+    ProgressBar progressBar;
     Movie currentMovie;
 
     @Override
@@ -95,6 +96,8 @@ public class CreateReviewFragment extends Fragment {
         moviesSpinner = view.findViewById(R.id.movies_spinner);
         rateSpinner = view.findViewById(R.id.rate_spinner);
         reviewId = ProfilePageFragmentArgs.fromBundle(getArguments()).getReviewId();
+        progressBar = view.findViewById(R.id.create_review_progressBar);
+        progressBar.setVisibility(View.INVISIBLE);
         if (reviewId != null) {
             TextView movieNameText = view.findViewById(R.id.create_review_movie_name_title);
             movieNameText.setVisibility(View.INVISIBLE);
@@ -173,7 +176,9 @@ public class CreateReviewFragment extends Fragment {
         });
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
+
             public void onClick(View v) {
+                progressBar.setVisibility(View.VISIBLE);
                 onSubmit();
 
             }

@@ -64,7 +64,6 @@ public class Model {
         List<Review> userReviews = new LinkedList<>();
 
         for(Review review: this.reviewList.getValue()){
-            Log.d(review.getMovieImageUrl(),"movieImage");
             if(review.getCreatorId().compareTo(user.getId()) == 0){
                 userReviews.add(review);
             }

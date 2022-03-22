@@ -101,8 +101,6 @@ public class ModelFirebase {
                                 reviewList.add(Review.create(document.getData()));
                             }
 
-                        } else {
-                            Log.d("TAG", "Error getting documents: ", task.getException());
                         }
                     }
                 });
@@ -165,13 +163,8 @@ public class ModelFirebase {
                         List<Review> myReviews = new LinkedList<>();
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                Log.d(TAG, document.getId() + " => " + document.getData());
                                 myReviews.add(Review.create(document.getData()));
-                                System.out.println("Firebase" + myReviews);
                             }
-                        }
-                        else {
-                            Log.d(TAG, "Error getting documents: ", task.getException());
                         }
                        // listener.onComplete(myReviews);
                     }
